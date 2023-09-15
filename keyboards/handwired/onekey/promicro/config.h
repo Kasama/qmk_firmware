@@ -16,6 +16,9 @@
 
 #pragma once
 
+#include "./avr_mcu_section.h"
+AVR_MCU(F_CPU, "atmega32u4");
+
 #define ADC_PIN F6
 
 #define QMK_WAITING_TEST_BUSY_PIN F6
