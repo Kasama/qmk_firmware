@@ -30,12 +30,52 @@ enum custom_keycodes {
 #define KC_ADEN LT(_ADJUST, KC_END)
 #define KC_ADPU LT(_ADJUST, KC_PGUP)
 
+#define SFT_ESC  SFT_T(KC_ESC)
+#define C_BSPC   CTL_T(KC_BSPC)
+#define ALT_SPC  RALT_T(KC_SPC)
+#define ALT_TAB  ALT_T(KC_TAB)
+#define ALT_LBC  ALT_T(KC_TAB)
+#define SFT_ENT  RSFT_T(KC_ENT)
+#define SFT_DQUO SFT_T(BR_DQUO)
+
+#define COD_ESC LT(_CODE, KC_ESC)
+
+// homerow tap mod keys
+#define HM_SA SFT_T(KC_A)
+#define HM_CS CTL_T(KC_S)
+#define HM_AD ALT_T(KC_D)
+#define HM_GF GUI_T(KC_F)
+
+#define HM_GJ GUI_T(KC_J)
+#define HM_AK ALT_T(KC_K)
+#define HM_CL CTL_T(KC_L)
+#define HM_SÇ SFT_T(BR_SCLN)
+
+#define KC_ML KC_MS_LEFT
+#define KC_MR KC_MS_RIGHT
+#define KC_MU KC_MS_UP
+#define KC_MD KC_MS_DOWN
+#define KC_MB1 KC_MS_BTN1
+#define KC_MB2 KC_MS_BTN2
+#define KC_PRINT KC_PRINT_SCREEN
+
+#define SYSTM OSL(_SYS)
+#define NUMROW OSL(_NUMROW)
+#define CODE OSL(_CODE)
+#define NUMPAD OSL(_NUMPAD)
+
+#define LOWER_R OSL(_NUMROW)
+#define LOWER_B OSL(_NUMROW)
+
+#define BR_RCBR S(BR_RBRC)
+#define BR_LCBR S(BR_LBRC)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_NAGR ,KC_1    ,KC_2    ,KC_3    ,KC_4    ,KC_5    ,                                            KC_6    ,KC_7    ,KC_8    ,KC_9    ,KC_0    ,KC_NAMI ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_TAB  ,KC_A    ,KC_W    ,KC_E    ,KC_R    ,KC_T    ,SYM_L   ,                          SYM_L   ,KC_Y    ,KC_U    ,KC_I    ,KC_O    ,KC_P    ,KC_EQL  ,
+     KC_TAB  ,KC_a    ,KC_W    ,KC_E    ,KC_R    ,KC_T    ,SYM_L   ,                          SYM_L   ,KC_Y    ,KC_U    ,KC_I    ,KC_O    ,KC_P    ,KC_EQL  ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_ESC  ,KC_A    ,KC_S    ,KC_D    ,KC_F    ,KC_G    ,KC_LBRC ,                          KC_RBRC ,KC_H    ,KC_J    ,KC_K    ,KC_L    ,KC_CTLÇ ,KC_QUOT ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
