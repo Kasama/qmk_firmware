@@ -30,10 +30,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // clang-format off
 
+#include "sendstring_brazilian_abnt2.h"
 #include "keycodes.h"
 #include "keymap_brazilian_abnt2.h"
+#include "quantum.h"
 #include "quantum_keycodes.h"
 #include QMK_KEYBOARD_H
+#include "process_combo.h"
 
 #define _QWERTY     0
 #define _WORKMAN    1
@@ -87,6 +90,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BR_RCBR S(BR_RBRC)
 #define BR_LCBR S(BR_LBRC)
 
+enum custom_keycodes {
+    K_VIMCMD = SAFE_RANGE,
+};
+
+// Combos
+#define COMBO_ONLY_FROM_LAYER _QWERTY
+
+const uint16_t PROGMEM c_escbspc[] = {COD_ESC, C_BSPC, COMBO_END};
+const uint16_t PROGMEM c_systab[]  = {SYSTM, ALT_TAB, COMBO_END};
+const uint16_t PROGMEM c_jk[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM c_lç[] = {KC_L, HM_SÇ, COMBO_END};
+const uint16_t PROGMEM c_homerow_r[]     = {KC_J, KC_K, KC_L, HM_SÇ, COMBO_END};
+const uint16_t PROGMEM c_idx_homerow_r[] = {KC_H, KC_K, KC_L, HM_SÇ, COMBO_END};
+const uint16_t PROGMEM c_u_homerow_r[]     = {KC_U, KC_I, KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM c_u_idx_homerow_r[] = {KC_Y, KC_I, KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM c_l_homerow_r[]     = {KC_M, KC_COMM, KC_DOT, BR_SLSH, COMBO_END};
+const uint16_t PROGMEM c_l_idx_homerow_r[] = {KC_N, KC_COMM, KC_DOT, BR_SLSH, COMBO_END};
+const uint16_t PROGMEM c_homerow_l[]     = {HM_SA, KC_S, KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM c_idx_homerow_l[] = {HM_SA, KC_S, KC_D, KC_G, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(c_jk, KC_ESC),
+    COMBO(c_escbspc, LM(_NUMROW, MOD_LGUI)),
+    COMBO(c_systab, LM(_NUMROW, MOD_LGUI)),
+    COMBO(c_u_idx_homerow_r, QK_BOOT),
+    COMBO(c_lç, K_VIMCMD),
+    COMBO(c_homerow_l, NUMPAD),
+    COMBO(c_idx_homerow_l, KC_ENTER),
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT_kasama(
@@ -135,7 +168,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ├────────┼────────┼────────┼────────┼────────┤                             ├────────┼────────┼────────┼────────┼────────┤
      BR_BSLS, KC_CAPS, BR_CCED, _______, _______,                               _______, BR_LCBR, BR_RCBR, BR_SCLN, BR_PIPE,
 // └────────┼────────┼────────┼────────┴────────┘                             └────────┴────────┼────────┼────────┼────────┘
-              _______, _______,                                                                   BR_LABK, BR_RABK,
+              _______, _______,                                                                S(KC_MINS), KC_PLUS,
 //          └────────┴────────┘┌────────┬────────┐                           ┌────────┬────────┐└────────┴────────┘
                                  _______, _______,                             _______, _______,
 //                             └────────┴────────┘                           └────────┴────────┘
@@ -156,10 +189,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // └────────┼────────┼────────┼────────┴────────┘                             └────────┴────────┼────────┼────────┼────────┘
               _______, _______,                                                                    KC_MB1,  KC_MB2,
 //          └────────┴────────┘┌────────┬────────┐                           ┌────────┬────────┐└────────┴────────┘
-                                 _______, NUMPAD ,                             _______, _______,
+                                 _______,LAYER_SEL,                            _______, _______,
 //                             └────────┴────────┘                           └────────┴────────┘
 //                                         ┌────────┬────────┐   ┌────────┬────────┐
-                                             _______,LAYER_SEL,    _______, _______,
+                                             _______, NUMPAD ,     _______, _______,
 //                                         ├────────┼────────┤   ├────────┼────────┤
                                              _______, _______,     _______, _______
 //                                         └────────┴────────┘   └────────┴────────┘
@@ -194,10 +227,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // └────────┼────────┼────────┼────────┴────────┘                             └────────┴────────┼────────┼────────┼────────┘
               _______, _______,                                                                  KC_KP_0 ,KC_KP_DOT,
 //          └────────┴────────┘┌────────┬────────┐                           ┌────────┬────────┐└────────┴────────┘
-                                 _______, TG(_NUMPAD),                     KC_KP_ENTER,  KC_TAB,
+                                 _______, _______,                     KC_KP_ENTER,  KC_TAB,
 //                             └────────┴────────┘                           └────────┴────────┘
 //                                         ┌────────┬────────┐   ┌────────┬────────┐
-                                             _______, _______,     KC_BSPC, _______,
+                                             _______,TG(_NUMPAD),  KC_BSPC, _______,
 //                                         ├────────┼────────┤   ├────────┼────────┤
                                              _______, _______,     _______, _______
 //                                         └────────┴────────┘   └────────┴────────┘
@@ -279,3 +312,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   }
   return state;
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case K_VIMCMD:
+            SEND_STRING(SS_TAP(X_ESC) SS_DELAY(30) ":");
+            break;
+    }
+    return true;
+}
