@@ -94,30 +94,46 @@ enum custom_keycodes {
     K_VIMCMD = SAFE_RANGE,
 };
 
+// tap dance
+enum {
+    TD_SYS_GUI,
+};
+
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_SYS_GUI] = ACTION_TAP_DANCE_DOUBLE(SYSTM, KC_LGUI)
+};
+
+
 // Combos
 #define COMBO_ONLY_FROM_LAYER _QWERTY
 
 const uint16_t PROGMEM c_escbspc[] = {COD_ESC, C_BSPC, COMBO_END};
 const uint16_t PROGMEM c_systab[]  = {SYSTM, ALT_TAB, COMBO_END};
+const uint16_t PROGMEM c_sysesc[]  = {SYSTM, COD_ESC, COMBO_END};
 const uint16_t PROGMEM c_jk[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM c_lç[] = {KC_L, HM_SÇ, COMBO_END};
+const uint16_t PROGMEM c_as[] = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM c_atab[] = {KC_A, ALT_TAB, COMBO_END};
 const uint16_t PROGMEM c_homerow_r[]     = {KC_J, KC_K, KC_L, HM_SÇ, COMBO_END};
 const uint16_t PROGMEM c_idx_homerow_r[] = {KC_H, KC_K, KC_L, HM_SÇ, COMBO_END};
 const uint16_t PROGMEM c_u_homerow_r[]     = {KC_U, KC_I, KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM c_u_idx_homerow_r[] = {KC_Y, KC_I, KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM c_l_homerow_r[]     = {KC_M, KC_COMM, KC_DOT, BR_SLSH, COMBO_END};
 const uint16_t PROGMEM c_l_idx_homerow_r[] = {KC_N, KC_COMM, KC_DOT, BR_SLSH, COMBO_END};
-const uint16_t PROGMEM c_homerow_l[]     = {HM_SA, KC_S, KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM c_idx_homerow_l[] = {HM_SA, KC_S, KC_D, KC_G, COMBO_END};
+const uint16_t PROGMEM c_homerow_l[]     = {KC_A, KC_S, KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM c_idx_homerow_l[] = {KC_A, KC_S, KC_D, KC_G, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(c_jk, KC_ESC),
     COMBO(c_escbspc, LM(_NUMROW, MOD_LGUI)),
     COMBO(c_systab, LM(_NUMROW, MOD_LGUI)),
+    COMBO(c_sysesc, TG(_GAME)),
     COMBO(c_u_idx_homerow_r, QK_BOOT),
     COMBO(c_lç, K_VIMCMD),
     COMBO(c_homerow_l, NUMPAD),
     COMBO(c_idx_homerow_l, KC_ENTER),
+    COMBO(c_as, KC_LSFT),
+    COMBO(c_atab, KC_LGUI),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -126,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ┌────────┬────────┬────────┬────────┬────────┐                             ┌────────┬────────┬────────┬────────┬────────┐
       KC_Q  ,  KC_W  ,  KC_E  ,  KC_R  ,  KC_T  ,                                KC_Y  ,  KC_U  ,  KC_I  ,  KC_O  ,  KC_P  ,
 // ├────────┼────────┼────────┼────────┼────────┤                             ├────────┼────────┼────────┼────────┼────────┤
-      HM_SA ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,                                KC_H  ,  KC_J  ,  KC_K  ,  KC_L  ,  HM_SÇ ,
+      KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,                                KC_H  ,  KC_J  ,  KC_K  ,  KC_L  ,  HM_SÇ ,
 // ├────────┼────────┼────────┼────────┼────────┤                             ├────────┼────────┼────────┼────────┼────────┤
       KC_Z  ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,                                KC_N  ,  KC_M  , KC_COMM, KC_DOT , BR_SLSH,
 // └────────┼────────┼────────┼────────┴────────┘                             └────────┴────────┼────────┼────────┼────────┘
@@ -135,9 +151,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  COD_ESC,  C_BSPC,                             ALT_SPC,  NUMROW,
 //                             └────────┴────────┘                           └────────┴────────┘
 //                                         ┌────────┬────────┐   ┌────────┬────────┐
-                                               SYSTM, ALT_TAB,     SFT_ENT,  CODE  ,
+                                              SYSTM , ALT_TAB,     SFT_ENT,  CODE  ,
 //                                         ├────────┼────────┤   ├────────┼────────┤
-                                              NUMROW, KC_LGUI,     BR_QUOT, BR_BSLS
+                                             KC_NO  ,  KC_NO ,      KC_NO ,  KC_NO
 //                                         └────────┴────────┘   └────────┴────────┘
     ),
 
@@ -183,9 +199,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ┌────────┬────────┬────────┬────────┬────────┐                             ┌────────┬────────┬────────┬────────┬────────┐
      QK_BOOT, _______, KC_MU,   _______, AC_TOGG,                               KC_VOLD, KC_MUTE, KC_VOLU, _______, KC_PGUP,
 // ├────────┼────────┼────────┼────────┼────────┤                             ├────────┼────────┼────────┼────────┼────────┤
-     BR_QUOT, KC_ML,   KC_MD,   KC_MR,   _______,                               KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_PGDN,
+     BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,                               KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_PGDN,
 // ├────────┼────────┼────────┼────────┼────────┤                             ├────────┼────────┼────────┼────────┼────────┤
-     BR_BSLS, _______, _______, _______, TG(_WORKMAN),                          KC_F23 , KC_SLSH, KC_BSLS, KC_QUES, KC_PIPE,
+     BR_BSLS, KC_MPRV, KC_MPLY, KC_MNXT, TG(_WORKMAN),                           KC_F23, KC_SLSH, KC_BSLS, KC_QUES, KC_PIPE,
 // └────────┼────────┼────────┼────────┴────────┘                             └────────┴────────┼────────┼────────┼────────┘
               _______, _______,                                                                    KC_MB1,  KC_MB2,
 //          └────────┴────────┘┌────────┬────────┐                           ┌────────┬────────┐└────────┴────────┘
@@ -227,7 +243,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // └────────┼────────┼────────┼────────┴────────┘                             └────────┴────────┼────────┼────────┼────────┘
               _______, _______,                                                                  KC_KP_0 ,KC_KP_DOT,
 //          └────────┴────────┘┌────────┬────────┐                           ┌────────┬────────┐└────────┴────────┘
-                                 _______, _______,                     KC_KP_ENTER,  KC_TAB,
+                                 _______, _______,                         KC_KP_ENTER,  KC_TAB,
 //                             └────────┴────────┘                           └────────┴────────┘
 //                                         ┌────────┬────────┐   ┌────────┬────────┐
                                              _______,TG(_NUMPAD),  KC_BSPC, _______,
