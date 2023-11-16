@@ -1,0 +1,12 @@
+# VIA_ENABLE = yes
+
+UNICODE_COMMON = yes
+
+LEADER_ENABLE = yes
+# AUTOCORRECT_ENABLE = yes
+
+COMBO_ENABLE = yes
+
+# TAP_DANCE_ENABLE = yes
+
+RAW_ENABLE = yes

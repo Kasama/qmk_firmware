@@ -30,6 +30,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // clang-format off
 
+#include <stdint.h>
+#include "action.h"
+#include "action_layer.h"
 #include "sendstring_brazilian_abnt2.h"
 #include "keycodes.h"
 #include "keymap_brazilian_abnt2.h"
@@ -105,8 +108,6 @@ tap_dance_action_t tap_dance_actions[] = {
 
 
 // Combos
-#define COMBO_ONLY_FROM_LAYER _QWERTY
-
 const uint16_t PROGMEM c_escbspc[] = {COD_ESC, C_BSPC, COMBO_END};
 const uint16_t PROGMEM c_systab[]  = {SYSTM, ALT_TAB, COMBO_END};
 const uint16_t PROGMEM c_sysesc[]  = {SYSTM, COD_ESC, COMBO_END};
@@ -129,10 +130,11 @@ combo_t key_combos[] = {
     COMBO(c_systab, LM(_NUMROW, MOD_LGUI)),
     COMBO(c_sysesc, TG(_GAME)),
     COMBO(c_u_idx_homerow_r, QK_BOOT),
+    COMBO(c_l_idx_homerow_r, QK_MAKE),
     COMBO(c_lç, K_VIMCMD),
     COMBO(c_homerow_l, NUMPAD),
     COMBO(c_idx_homerow_l, KC_ENTER),
-    COMBO(c_as, KC_LSFT),
+    COMBO(c_as, OSM(MOD_LSFT)),
     COMBO(c_atab, KC_LGUI),
 };
 
@@ -203,7 +205,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ├────────┼────────┼────────┼────────┼────────┤                             ├────────┼────────┼────────┼────────┼────────┤
      BR_BSLS, KC_MPRV, KC_MPLY, KC_MNXT, TG(_WORKMAN),                           KC_F23, KC_SLSH, KC_BSLS, KC_QUES, KC_PIPE,
 // └────────┼────────┼────────┼────────┴────────┘                             └────────┴────────┼────────┼────────┼────────┘
-              _______, _______,                                                                    KC_MB1,  KC_MB2,
+      QK_COMBO_TOGGLE, _______,                                                                    KC_MB1,  KC_MB2,
 //          └────────┴────────┘┌────────┬────────┐                           ┌────────┬────────┐└────────┴────────┘
                                  _______,LAYER_SEL,                            _______, _______,
 //                             └────────┴────────┘                           └────────┴────────┘
@@ -315,7 +317,6 @@ void persistent_default_layer_set(uint16_t default_layer) {
     default_layer_set(default_layer);
 }
 
-// Automatically enable numlock when changing to the numpad layer
 layer_state_t layer_state_set_user(layer_state_t state) {
   switch(get_highest_layer(state)) {
   case _NUMPAD:
@@ -328,6 +329,14 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   }
   return state;
 };
+
+bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
+  if (layer_state_is(_GAME)) {
+    return false;
+  }
+
+  return true;
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {

@@ -34,3 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define DEBOUNCE 40
 #define DEBOUNCE_TYPE asym_eager_defer_pk
+
+#define COMBO_ONLY_FROM_LAYER 0
+
+#define ENABLE_COMPILE_KEYCODE
