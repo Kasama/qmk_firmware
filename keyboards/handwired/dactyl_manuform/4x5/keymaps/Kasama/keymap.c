@@ -31,6 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // clang-format off
 
 #include <stdint.h>
+#include <string.h>
 #include "action.h"
 #include "action_layer.h"
 #include "sendstring_brazilian_abnt2.h"
@@ -38,6 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "keymap_brazilian_abnt2.h"
 #include "quantum.h"
 #include "quantum_keycodes.h"
+#include "raw_hid.h"
 #include QMK_KEYBOARD_H
 #include "process_combo.h"
 
@@ -256,9 +258,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_GAME] = LAYOUT_kasama(
 // ┌────────┬────────┬────────┬────────┬────────┐                             ┌────────┬────────┬────────┬────────┬────────┐
-      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,                               _______, _______, _______, _______, _______,
+      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,                               _______, _______,  KC_UP , _______, _______,
 // ├────────┼────────┼────────┼────────┼────────┤                             ├────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,                               _______, _______, _______, _______, _______,
+     KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,                               _______, KC_LEFT, KC_DOWN,KC_RIGHT, _______,
 // ├────────┼────────┼────────┼────────┼────────┤                             ├────────┼────────┼────────┼────────┼────────┤
         KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               _______, _______, _______, _______, _______,
 // └────────┼────────┼────────┼────────┴────────┘                             └────────┴────────┼────────┼────────┼────────┘
@@ -336,6 +338,26 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
   }
 
   return true;
+}
+
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+    uint8_t response[length];
+    memset(response, 0, length);
+
+    if (data[0] == 0x41) {
+        raw_hid_send(response, length);
+    } else if (data[0] == 0x42) {
+        bootloader_jump();
+    } else if (data[0] == 0x43) {
+        response[0] = 0x43;
+        response[1] = get_highest_layer(layer_state);
+        raw_hid_send(response, length);
+    } else if (data[0] == 0x44) {
+        layer_move(data[1]);
+        response[0] = 0x44;
+        response[1] = get_highest_layer(layer_state);
+        raw_hid_send(response, length);
+    }
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
