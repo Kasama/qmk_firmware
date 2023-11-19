@@ -5,12 +5,6 @@
     "processor": "RP2040",
     "bootloader": "rp2040",
     "diode_direction": "ROW2COL",
-    "features": {
-        "command": false,
-        "console": false,
-        "extrakey": true,
-        "mousekey": true
-    },
     "matrix_pins": {
         "cols": ["GP17", "GP16"],
         "rows": ["GP18", "GP19"]
