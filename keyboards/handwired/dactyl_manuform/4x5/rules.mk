@@ -15,9 +15,11 @@ SPLIT_KEYBOARD = yes
 LEADER_ENABLE = yes
 AUTOCORRECT_ENABLE = yes
 
-VPATH += keyboards/gboards
+DYNAMIC_MACRO_ENABLE = yes
+
 COMBO_ENABLE = yes
 
 TAP_DANCE_ENABLE = yes
 
 RAW_ENABLE = yes
+SCR += hid.c

@@ -8,10 +8,6 @@
     "pid": "0x5244",
     "device_version": "1.0.0"
   },
-  "rgblight": {
-    "led_count": 14,
-    "split": true
-  },
   "layouts": {
     "LAYOUT": {
       "layout": [

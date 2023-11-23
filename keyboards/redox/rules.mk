@@ -9,7 +9,7 @@ COMMAND_ENABLE = yes        # Commands for debug and configuration
 NKRO_ENABLE = no            # Enable N-Key Rollover
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 AUDIO_ENABLE = no           # Audio output
-RGBLIGHT_ENABLE = yes       # Enable WS2812 RGB underlight.
+RGBLIGHT_ENABLE = no       # Enable WS2812 RGB underlight.
 
 SPLIT_KEYBOARD = yes
 
@@ -18,3 +18,15 @@ DEFAULT_FOLDER = redox/rev1/base
 # Disable unsupported hardware
 AUDIO_SUPPORTED = no
 BACKLIGHT_SUPPORTED = no
+
+# features
+LEADER_ENABLE = no
+
+DYNAMIC_MACRO_ENABLE = no
+
+COMBO_ENABLE = yes
+
+TAP_DANCE_ENABLE = no
+
+RAW_ENABLE = no
+# SCR += hid.c

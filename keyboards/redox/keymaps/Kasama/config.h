@@ -37,3 +37,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_HUE_STEP 8
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8
+
+
+#define TAPPING_TOGGLE 1
+#define ONESHOT_TIMEOUT 500
+// #define HOLD_ON_OTHER_KEY_PRESS
+#define PERMISSIVE_HOLD
+
+#define DEBOUNCE 40
+#define DEBOUNCE_TYPE asym_eager_defer_pk
+
+#define COMBO_ONLY_FROM_LAYER 0
+
+// #define ENABLE_COMPILE_KEYCODE
+
+#define RAW_USAGE_PAGE 0xFF60
+#define RAW_USAGE_ID 0x61
