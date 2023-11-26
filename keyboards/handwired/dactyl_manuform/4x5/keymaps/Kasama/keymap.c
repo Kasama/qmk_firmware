@@ -34,6 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdint.h>
 #include <string.h>
+#include "action_layer.h"
 #include "sendstring_brazilian_abnt2.h"
 #include "raw_hid.h"
 #include QMK_KEYBOARD_H
@@ -45,9 +46,22 @@ enum layers {
     _SYS,
     _NUMROW,
     _GAME,
+    _GAME_NUM_2,
     _CODE,
     _NUMPAD,
     _TRANS = 15
+};
+
+const char* layer_names[] = {
+    [_QWERTY] = "QWERTY",
+    [_WORKMAN] = "Workman",
+    [_SYS] = "SYS",
+    [_NUMROW] = "Numrow",
+    [_GAME] = "Game",
+    [_GAME_NUM_2] = "Game 2",
+    [_CODE] = "Code",
+    [_NUMPAD] = "Numpad",
+    [_TRANS] = "Trans",
 };
 
 #define SFT_ESC  SFT_T(KC_ESC)
@@ -84,6 +98,7 @@ enum layers {
 #define CODE OSL(_CODE)
 
 #define NUMPAD MO(_NUMPAD)
+#define GAME2 MO(_GAME_NUM_2)
 
 #define LOWER_R OSL(_NUMROW)
 #define LOWER_B OSL(_NUMROW)
@@ -108,6 +123,7 @@ tap_dance_action_t tap_dance_actions[] = {
 const uint16_t PROGMEM c_escbspc[] = {COD_ESC, C_BSPC, COMBO_END};
 const uint16_t PROGMEM c_systab[]  = {SYSTM, ALT_TAB, COMBO_END};
 const uint16_t PROGMEM c_sysesc[]  = {SYSTM, COD_ESC, COMBO_END};
+const uint16_t PROGMEM c_leadsftent[]  = {QK_LEAD, SFT_ENT, COMBO_END};
 const uint16_t PROGMEM c_jk[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM c_lç[] = {KC_L, HM_SÇ, COMBO_END};
 const uint16_t PROGMEM c_as[] = {KC_A, KC_S, COMBO_END};
@@ -125,6 +141,7 @@ combo_t key_combos[] = {
     COMBO(c_jk, KC_ESC),
     COMBO(c_escbspc, LM(_NUMROW, MOD_LGUI)),
     COMBO(c_systab, LM(_NUMROW, MOD_LGUI)),
+    COMBO(c_leadsftent, SYSTM),
     COMBO(c_sysesc, TG(_GAME)),
     COMBO(c_u_idx_homerow_r, QK_BOOT),
     COMBO(c_l_idx_homerow_r, QK_MAKE),
@@ -136,7 +153,7 @@ combo_t key_combos[] = {
 };
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
-  if (layer_state_is(_GAME)) {
+  if (get_highest_layer(layer_state) == _GAME || get_highest_layer(layer_state) == _GAME_NUM_2) {
     return false;
   }
 
@@ -272,11 +289,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   KC_ESC,  KC_SPC,         _______, _______,
 //                             └────────┴────────┘       └────────┴────────┘
 //                               ┌────────┬────────┐   ┌────────┬────────┐
-                                   _______, KC_LCTL,     _______, _______,
+                                    GAME2 , KC_LCTL,     _______, _______,
 //                               ├────────┼────────┤   ├────────┼────────┤
-                                 TG(_GAME), _______,     _______, _______
+                                 TG(_GAME), KC_LALT,     _______, _______
 //                               └────────┴────────┘   └────────┴────────┘
     ),
+
+    [_GAME_NUM_2] = LAYOUT_kasama(
+// ┌────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┐
+     _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______,
+// ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
+     _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______,
+// ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
+        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,           _______, _______, _______, _______, _______,
+// └────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┘
+                KC_F1,   KC_F2,                                               _______, _______,
+//          └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
+                                 _______, _______,         _______, _______,
+//                             └────────┴────────┘       └────────┴────────┘
+//                               ┌────────┬────────┐   ┌────────┬────────┐
+                                    GAME2 , _______,     _______, _______,
+//                               ├────────┼────────┤   ├────────┼────────┤
+                                   _______, _______,     _______, _______
+//                               └────────┴────────┘   └────────┴────────┘
+    ),
+
 
     [_TRANS] = LAYOUT_kasama(
 // ┌────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┐
@@ -324,6 +361,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #define HID_GET_LAYER 0x43
 #define HID_RESP_LAYER 0x43
 #define HID_RESP_GET_LAYER_ARG_LAYER 1
+#define HID_RESP_GET_LAYER_ARG_LAYER_NAME 2
 
 #define HID_SET_LAYER 0x44
 #define HID_SET_LAYER_ARG_LAYER 1
@@ -345,6 +383,11 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
     } else if (operation == HID_GET_LAYER) {
         response[HID_RESP_BASE]                = HID_RESP_LAYER;
         response[HID_RESP_GET_LAYER_ARG_LAYER] = get_highest_layer(layer_state);
+        strncpy(
+            (char *) &response[HID_RESP_GET_LAYER_ARG_LAYER_NAME],
+            layer_names[response[HID_RESP_GET_LAYER_ARG_LAYER]],
+            length - HID_RESP_GET_LAYER_ARG_LAYER_NAME - 1
+        );
         raw_hid_send(response, length);
     } else if (operation == HID_SET_LAYER) {
         layer_move(data[HID_SET_LAYER_ARG_LAYER]);
