@@ -14,4 +14,5 @@
 #define KP_PLUS KC_KP_PLUS
 #define KP_EQUL KC_KP_EQUAL
 #define KP_DOT KC_KP_DOT
+#define KP_COM KC_KP_COMMA
 #define KP_ENTR KC_KP_ENTER

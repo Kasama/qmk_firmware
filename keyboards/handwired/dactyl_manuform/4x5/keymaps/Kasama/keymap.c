@@ -47,7 +47,7 @@ enum layers {
     _NUMROW,
     _GAME,
     _GAME_NUM_2,
-    _CODE,
+    _SYMB,
     _NUMPAD,
     _TRANS = 15
 };
@@ -59,7 +59,7 @@ const char* layer_names[] = {
     [_NUMROW] = "Numrow",
     [_GAME] = "Game",
     [_GAME_NUM_2] = "Game 2",
-    [_CODE] = "Code",
+    [_SYMB] = "Symbols",
     [_NUMPAD] = "Numpad",
     [_TRANS] = "Trans",
 };
@@ -72,7 +72,7 @@ const char* layer_names[] = {
 #define SFT_ENT  RSFT_T(KC_ENT)
 #define SFT_DQUO SFT_T(BR_DQUO)
 
-#define COD_ESC LT(_CODE, KC_ESC)
+#define COD_ESC LT(_SYMB, KC_ESC)
 
 // homerow tap mod keys
 #define HM_SA SFT_T(KC_A)
@@ -95,7 +95,7 @@ const char* layer_names[] = {
 
 #define SYSTM OSL(_SYS)
 #define NUMROW OSL(_NUMROW)
-#define CODE OSL(_CODE)
+#define SYMB OSL(_SYMB)
 
 #define NUMPAD MO(_NUMPAD)
 #define GAME2 MO(_GAME_NUM_2)
@@ -194,17 +194,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  COD_ESC,  C_BSPC,         ALT_SPC,  NUMROW,
 //                             └────────┴────────┘       └────────┴────────┘
 //                               ┌────────┬────────┐   ┌────────┬────────┐
-                                     SYSTM, ALT_TAB,     SFT_ENT,  CODE  ,
+                                     SYSTM, ALT_TAB,     SFT_ENT,  SYMB  ,
 //                               ├────────┼────────┤   ├────────┼────────┤
                                     NUMROW, KC_LGUI,     BR_QUOT, BR_BSLS
 //                               └────────┴────────┘   └────────┴────────┘
     ),
 
-    [_CODE] = LAYOUT_kasama(
+    [_SYMB] = LAYOUT_kasama(
 // ┌────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┐
      BR_QUOT, BR_DQUO, _______, DM_REC2, DM_PLY2,          KC_PRINT, BR_LBRC, BR_RBRC, BR_GRV , BR_ACUT,
 // ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
-    SFT_DQUO, _______,  KC_DEL, DM_REC1, DM_PLY1,           _______, KC_LPRN, KC_RPRN, BR_CIRC, BR_TILD,
+     _______, _______,  KC_DEL, DM_REC1, DM_PLY1,           _______, KC_LPRN, KC_RPRN, BR_CIRC, BR_TILD,
 // ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
      BR_BSLS, KC_CAPS, BR_CCED, _______, _______,           _______, BR_LCBR, BR_RCBR, BR_SCLN, BR_PIPE,
 // └────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┘
@@ -221,7 +221,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SYS] = LAYOUT_kasama(
 // ┌────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┐
-     QK_BOOT, _______, KC_MU,   _______, AC_TOGG,           KC_VOLD, KC_MUTE, KC_VOLU, _______, KC_PGUP,
+     QK_BOOT, KC_MB1 , KC_MU,   KC_MB2 , AC_TOGG,           KC_VOLD, KC_MUTE, KC_VOLU, _______, KC_PGUP,
 // ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
      BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_PGDN,
 // ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
@@ -265,7 +265,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
      _______, BR_LCBR, BR_RCBR, _______, _______,           KP_EQUL,  KP_1  ,  KP_2  ,  KP_3  , KP_EQUL,
 // └────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┘
-              _______, _______,                                                KP_0  ,  KP_DOT,
+              _______, _______,                                                KP_0  ,  KP_COM,
 //          └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
                                  _______, _______,         KC_SPC , KC_TAB ,
 //                             └────────┴────────┘       └────────┴────────┘
@@ -411,7 +411,9 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case K_VIMCMD:
-            SEND_STRING(SS_TAP(X_ESC) SS_DELAY(30) ":");
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_ESC) SS_DELAY(30) ":");
+            }
             break;
     }
     return true;
