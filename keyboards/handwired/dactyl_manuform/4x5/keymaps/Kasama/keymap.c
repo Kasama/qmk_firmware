@@ -49,6 +49,7 @@ enum layers {
     _GAME_NUM_2,
     _SYMB,
     _NUMPAD,
+    _VIMMODE,
     _TRANS = 15
 };
 
@@ -61,6 +62,7 @@ const char* layer_names[] = {
     [_GAME_NUM_2] = "Game 2",
     [_SYMB] = "Symbols",
     [_NUMPAD] = "Numpad",
+    [_VIMMODE] = "Vim mode",
     [_TRANS] = "Trans",
 };
 
@@ -76,6 +78,7 @@ const char* layer_names[] = {
 
 // homerow tap mod keys
 #define HM_SA SFT_T(KC_A)
+#define HM_SZ SFT_T(KC_Z)
 #define HM_CS CTL_T(KC_S)
 #define HM_AD ALT_T(KC_D)
 #define HM_GF GUI_T(KC_F)
@@ -127,6 +130,7 @@ const uint16_t PROGMEM c_leadsftent[]  = {QK_LEAD, SFT_ENT, COMBO_END};
 const uint16_t PROGMEM c_jk[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM c_lç[] = {KC_L, HM_SÇ, COMBO_END};
 const uint16_t PROGMEM c_as[] = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM c_zx[] = {KC_Z, KC_X, COMBO_END};
 const uint16_t PROGMEM c_atab[] = {KC_A, ALT_TAB, COMBO_END};
 const uint16_t PROGMEM c_homerow_r[]     = {KC_J, KC_K, KC_L, HM_SÇ, COMBO_END};
 const uint16_t PROGMEM c_idx_homerow_r[] = {KC_H, KC_K, KC_L, HM_SÇ, COMBO_END};
@@ -148,7 +152,7 @@ combo_t key_combos[] = {
     COMBO(c_lç, K_VIMCMD),
     COMBO(c_homerow_l, NUMPAD),
     COMBO(c_idx_homerow_l, KC_ENTER),
-    COMBO(c_as, OSM(MOD_LSFT)),
+    COMBO(c_zx, OSM(MOD_LSFT)),
     COMBO(c_atab, KC_LGUI),
 };
 
@@ -168,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
       KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  KC_J  ,  KC_K  ,  KC_L  ,  HM_SÇ ,
 // ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
-      KC_Z  ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,            KC_N  ,  KC_M  , KC_COMM, KC_DOT , BR_SLSH,
+      HM_SZ ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,            KC_N  ,  KC_M  , KC_COMM, KC_DOT , BR_SLSH,
 // └────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┘
               BR_LBRC, BR_RBRC,                                               KC_MINS, KC_EQL ,
 //          └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
@@ -309,6 +313,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                             └────────┴────────┘       └────────┴────────┘
 //                               ┌────────┬────────┐   ┌────────┬────────┐
                                     GAME2 , _______,     _______, _______,
+//                               ├────────┼────────┤   ├────────┼────────┤
+                                   _______, _______,     _______, _______
+//                               └────────┴────────┘   └────────┴────────┘
+    ),
+
+    [_VIMMODE] = LAYOUT_kasama(
+// ┌────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┐
+     _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______,
+// ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
+     _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______,
+// ├────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┤
+     _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______,
+// └────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┘
+              _______, _______,                                               _______, _______,
+//          └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
+                                 _______, _______,         _______, _______,
+//                             └────────┴────────┘       └────────┴────────┘
+//                               ┌────────┬────────┐   ┌────────┬────────┐
+                                   _______, _______,     _______, _______,
 //                               ├────────┼────────┤   ├────────┼────────┤
                                    _______, _______,     _______, _______
 //                               └────────┴────────┘   └────────┴────────┘
