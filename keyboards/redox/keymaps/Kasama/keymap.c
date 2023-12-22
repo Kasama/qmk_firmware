@@ -1,3 +1,5 @@
+//clang-format off
+
 #include <stdint.h>
 #include <string.h>
 #include "sendstring_brazilian_abnt2.h"
@@ -15,19 +17,20 @@ enum layers {
     // _TRANS = 15
 };
 
-#define SFT_ESC  SFT_T(KC_ESC)
-#define C_BSPC   CTL_T(KC_BSPC)
-#define C_ESC   CTL_T(KC_ESC)
-#define ALT_SPC  RALT_T(KC_SPC)
-#define ALT_TAB  ALT_T(KC_TAB)
-#define ALT_LBC  ALT_T(KC_TAB)
-#define SFT_ENT  RSFT_T(KC_ENT)
+#define SFT_ESC SFT_T(KC_ESC)
+#define C_BSPC CTL_T(KC_BSPC)
+#define C_ESC CTL_T(KC_ESC)
+#define ALT_SPC RALT_T(KC_SPC)
+#define ALT_TAB ALT_T(KC_TAB)
+#define ALT_LBC ALT_T(KC_TAB)
+#define SFT_ENT RSFT_T(KC_ENT)
 #define SFT_DQUO SFT_T(BR_DQUO)
 
 #define COD_ESC LT(_CODE, KC_ESC)
 
 // homerow tap mod keys
 #define HM_SA SFT_T(KC_A)
+#define HM_SZ SFT_T(KC_Z)
 #define HM_CS CTL_T(KC_S)
 #define HM_AD ALT_T(KC_D)
 #define HM_GF GUI_T(KC_F)
@@ -35,7 +38,7 @@ enum layers {
 #define HM_GJ GUI_T(KC_J)
 #define HM_AK ALT_T(KC_K)
 #define HM_CL CTL_T(KC_L)
-#define HM_SÇ SFT_T(BR_SCLN)
+#define HM_SCED SFT_T(BR_SCLN)
 
 #define KC_ML KC_MS_LEFT
 #define KC_MR KC_MS_RIGHT
@@ -62,41 +65,46 @@ enum custom_keycodes {
 };
 
 // Combos
-const uint16_t PROGMEM c_escbspc[] = {COD_ESC, C_BSPC, COMBO_END};
-const uint16_t PROGMEM c_systab[]  = {SYSTM, ALT_TAB, COMBO_END};
-const uint16_t PROGMEM c_sysesc[]  = {SYSTM, COD_ESC, COMBO_END};
-const uint16_t PROGMEM c_jk[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM c_lç[] = {KC_L, HM_SÇ, COMBO_END};
-const uint16_t PROGMEM c_as[] = {KC_A, KC_S, COMBO_END};
-const uint16_t PROGMEM c_atab[] = {KC_A, ALT_TAB, COMBO_END};
+const uint16_t PROGMEM c_escbspc[]         = {COD_ESC, C_BSPC, COMBO_END};
+const uint16_t PROGMEM c_systab[]          = {SYSTM, ALT_TAB, COMBO_END};
+const uint16_t PROGMEM c_sysesc[]          = {SYSTM, COD_ESC, COMBO_END};
+const uint16_t PROGMEM c_bspsalttab[]      = {C_BSPC, ALT_TAB, COMBO_END};
+const uint16_t PROGMEM c_sftentaltspc[]    = {SFT_ENT, ALT_SPC, COMBO_END};
+const uint16_t PROGMEM c_bspcnumrow[]      = {C_BSPC, NUMROW, COMBO_END};
+const uint16_t PROGMEM c_jk[]              = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM c_lcced[]           = {KC_L, HM_SCED, COMBO_END};
+const uint16_t PROGMEM c_as[]              = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM c_atab[]            = {KC_A, ALT_TAB, COMBO_END};
 const uint16_t PROGMEM c_u_idx_homerow_r[] = {KC_Y, KC_I, KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM c_l_homerow_r[]     = {KC_M, KC_COMM, KC_DOT, BR_SLSH, COMBO_END};
 const uint16_t PROGMEM c_l_idx_homerow_r[] = {KC_N, KC_COMM, KC_DOT, BR_SLSH, COMBO_END};
-const uint16_t PROGMEM c_homerow_l[]     = {KC_A, KC_S, KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM c_idx_homerow_l[] = {KC_A, KC_S, KC_D, KC_G, COMBO_END};
+const uint16_t PROGMEM c_homerow_l[]       = {KC_A, KC_S, KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM c_idx_homerow_l[]   = {KC_A, KC_S, KC_D, KC_G, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(c_jk, KC_ESC),
-    COMBO(c_escbspc, LM(_NUMROW, MOD_LGUI)),
-    COMBO(c_systab, LM(_NUMROW, MOD_LGUI)),
-    COMBO(c_sysesc, TG(_GAME)),
-    COMBO(c_u_idx_homerow_r, QK_BOOT),
-    COMBO(c_l_idx_homerow_r, QK_MAKE),
-    COMBO(c_lç, K_VIMCMD),
-    COMBO(c_homerow_l, NUMPAD),
-    COMBO(c_idx_homerow_l, KC_ENTER),
-    COMBO(c_as, OSM(MOD_LSFT)),
-    COMBO(c_atab, KC_LGUI),
+	COMBO(c_escbspc, LM(_NUMROW, MOD_LGUI)),
+	COMBO(c_bspsalttab, LM(_NUMROW, MOD_LGUI)),
+	COMBO(c_systab, LM(_NUMROW, MOD_LGUI)),
+	COMBO(c_sftentaltspc, SYSTM),
+	COMBO(c_bspcnumrow, SYSTM),
+	COMBO(c_sysesc, TG(_GAME)),
+	COMBO(c_u_idx_homerow_r, QK_BOOT),
+	COMBO(c_l_idx_homerow_r, QK_MAKE),
+	COMBO(c_lcced, K_VIMCMD),
+	COMBO(c_homerow_l, NUMPAD),
+	COMBO(c_idx_homerow_l, KC_ENTER),
+	COMBO(c_as, OSM(MOD_LSFT)),
+	COMBO(c_atab, KC_LGUI),
 };
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
-  if (layer_state_is(_GAME)) {
-    return false;
-  }
+    if (layer_state_is(_GAME)) {
+        return false;
+    }
 
-  return true;
+    return true;
 }
-
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT(
@@ -105,9 +113,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB  ,KC_Q    ,KC_W    ,KC_E    ,KC_R    ,KC_T    ,XXXXXXX ,                          XXXXXXX ,KC_Y    ,KC_U    ,KC_I    ,KC_O    ,KC_P    ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-      C_ESC  ,KC_A    ,KC_S    ,KC_D    ,KC_F    ,KC_G    ,XXXXXXX ,                          XXXXXXX ,KC_H    ,KC_J    ,KC_K    ,KC_L    , HM_SÇ  ,XXXXXXX ,
+      C_ESC  ,KC_A    ,KC_S    ,KC_D    ,KC_F    ,KC_G    ,XXXXXXX ,                          XXXXXXX ,KC_H    ,KC_J    ,KC_K    ,KC_L    , HM_SCED,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT ,KC_Z    ,KC_X    ,KC_C    ,KC_V    ,KC_B    ,XXXXXXX ,XXXXXXX ,        XXXXXXX ,XXXXXXX ,KC_N    ,KC_M    ,KC_COMM ,KC_DOT  ,BR_SLSH ,XXXXXXX ,
+     KC_LSFT ,HM_SZ   ,KC_X    ,KC_C    ,KC_V    ,KC_B    , NUMROW ,XXXXXXX ,        XXXXXXX ,XXXXXXX ,KC_N    ,KC_M    ,KC_COMM ,KC_DOT  ,BR_SLSH ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
      KC_LGUI ,XXXXXXX ,BR_LBRC ,BR_RBRC ,     COD_ESC ,     C_BSPC ,ALT_TAB ,        SFT_ENT ,ALT_SPC ,    NUMROW       ,KC_MINS ,KC_EQL  ,KC_UP   ,XXXXXXX
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
@@ -131,7 +139,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______ ,KC_F1   ,KC_F2   ,KC_F3   ,KC_F4   ,KC_F5   ,                                            KC_F6   ,KC_F7   ,KC_F8   ,KC_F9   ,KC_F10  ,_______ ,
   //├────────┼────────┬────────┬────────┬────────┬────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______ , QK_BOOT, _______, KC_MU,   _______, AC_TOGG,_______ ,                          _______ ,KC_VOLD , KC_MUTE, KC_VOLU, _______, KC_PGUP,_______ ,
+     _______ , QK_BOOT, KC_MB2 , KC_MU,   KC_MB1 , AC_TOGG,_______ ,                          _______ ,KC_VOLD , KC_MUTE, KC_VOLU, _______, KC_PGUP,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      _______ , BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,_______ ,                          _______ ,KC_LEFT , KC_DOWN, KC_UP,   KC_RGHT, KC_PGDN,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -190,22 +198,24 @@ void persistent_default_layer_set(uint16_t default_layer) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  switch(get_highest_layer(state)) {
-  case _NUMPAD:
-    // turn on numlock, if it isn't already on.
-    if (!(host_keyboard_led_state().num_lock)) {
-      register_code(KC_NUM_LOCK);
-      unregister_code(KC_NUM_LOCK);
+    switch (get_highest_layer(state)) {
+        case _NUMPAD:
+            // turn on numlock, if it isn't already on.
+            if (!(host_keyboard_led_state().num_lock)) {
+                register_code(KC_NUM_LOCK);
+                unregister_code(KC_NUM_LOCK);
+            }
+            break;
     }
-    break;
-  }
-  return state;
+    return state;
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case K_VIMCMD:
-            SEND_STRING(SS_TAP(X_ESC) SS_DELAY(30) ":");
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_ESC) SS_DELAY(30) ":");
+            }
             break;
     }
     return true;
