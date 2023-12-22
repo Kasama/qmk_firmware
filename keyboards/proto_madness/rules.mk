@@ -1,0 +1,18 @@
+# VIA_ENABLE = yes
+
+UNICODE_COMMON = no
+
+LEADER_ENABLE = no
+# AUTOCORRECT_ENABLE = yes
+
+COMBO_ENABLE = yes
+
+# TAP_DANCE_ENABLE = yes
+
+RAW_ENABLE = yes
+
+CONSOLE_ENABLE = yes
+# DEBUG_MATRIX_SCAN_RATE = yes
+
+# CUSTOM_MATRIX = yes
+# SRC += matrix.c
