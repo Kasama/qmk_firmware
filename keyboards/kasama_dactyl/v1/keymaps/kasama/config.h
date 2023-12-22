@@ -1,0 +1,1 @@
+#define COMBO_SHOULD_TRIGGER
