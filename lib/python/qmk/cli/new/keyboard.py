@@ -253,6 +253,22 @@ def new_keyboard(cli):
     community_info = Path(COMMUNITY / f'{default_layout}/info.json')
     augment_community_info(community_info, keyboard(kb_name) / community_info.name)
 
+    # NOTE(Kasama): pre-existing keyboards are ignored by default. So we un-ignore it here
+    kb_path = keyboard(kb_name)
+    with open(".gitignore", 'r+') as gitignore:
+        lines = gitignore.readlines()
+        gitignore.seek(0)
+
+        target = None
+        for i, line in enumerate(lines):
+            if line.startswith("# Add new keyboards here" ):
+                target = i
+                break
+        if target != None:
+            lines.insert(target, f"!/{kb_path}\n")
+        gitignore.writelines(lines)
+
+
     cli.log.info(f'{{fg_green}}Created a new keyboard called {{fg_cyan}}{kb_name}{{fg_green}}.{{fg_reset}}')
     cli.log.info(f'To start working on things, `cd` into {{fg_cyan}}keyboards/{kb_name}{{fg_reset}},')
     cli.log.info('or open the directory in your preferred text editor.')

@@ -111,3 +111,14 @@ compile_commands.json
 # VIA(L) files that don't belong in QMK repo
 via*.json
 /keyboards/**/keymaps/vial/*
+
+# Kasama's Fork stuff
+# Ignore all keyboards
+/keyboards/*
+# Un-ignore relevant keyboards
+!/keyboards/kasama_dactyl
+!/keyboards/handwired/dactyl_manuform/4x5
+!/keyboards/redox
+!/keyboards/virtual
+!/keyboards/proto_madness
+# Add new keyboards here
