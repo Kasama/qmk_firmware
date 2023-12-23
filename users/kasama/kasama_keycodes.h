@@ -1,6 +1,6 @@
 #pragma once
-#ifndef KASAMA_KEYCODES
-#define KASAMA_KEYCODES
+
+#ifdef KASAMA_KEYCODES_ENABLE
 
 #include "quantum_keycodes.h"
 #include "action.h"
@@ -15,6 +15,8 @@ enum kasama_custom_keycodes {
 
 bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 
+#endif
+
 #define SFT_ESC SFT_T(KC_ESC)
 #define C_BSPC CTL_T(KC_BSPC)
 #define ALT_SPC RALT_T(KC_SPC)
@@ -22,8 +24,6 @@ bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 #define ALT_LBC ALT_T(KC_TAB)
 #define SFT_ENT RSFT_T(KC_ENT)
 #define SFT_DQUO SFT_T(BR_DQUO)
-
-#define COD_ESC LT(_SYMB, KC_ESC)
 
 // homerow tap mod keys
 #define HM_SA SFT_T(KC_A)
@@ -48,4 +48,3 @@ bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 #define BR_RCBR S(BR_RBRC)
 #define BR_LCBR S(BR_LBRC)
 
-#endif

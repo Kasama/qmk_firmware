@@ -11,12 +11,6 @@
 //                                        ┌────────┬────────┐   ┌────────┬────────┐
 //                                        └────────┴────────┘   └────────┴────────┘
 
-#include "kasama.h"
-#include QMK_KEYBOARD_H
-#include <stdint.h>
-#include "action_layer.h"
-#include "keymap_brazilian_abnt2.h"
-
 // clang-format off
 enum layers {
     _QWERTY = 0,
@@ -43,14 +37,19 @@ const char* layer_names[] = {
 };
 // clang-format on
 
+#define AUTO_NUMLOCK_LAYERS _NUMPAD
+
+#include "kasama.h"
+
 const char *get_layer_name(int layer) {
     return layer_names[layer];
 }
 
-
 #define SYSTM OSL(_SYS)
 #define NUMROW OSL(_NUMROW)
 #define SYMB OSL(_SYMB)
+
+#define COD_ESC LT(_SYMB, KC_ESC)
 
 #define NUMPAD MO(_NUMPAD)
 #define GAME2 MO(_GAME_NUM_2)
@@ -99,7 +98,7 @@ combo_t key_combos[] = {
 // clang-format on
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
-    if (get_highest_layer(layer_state) == _GAME || get_highest_layer(layer_state) == _GAME_NUM_2 ) {
+    if (get_highest_layer(layer_state) == _GAME || get_highest_layer(layer_state) == _GAME_NUM_2) {
         return false;
     }
 
@@ -113,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______,  KC_Q  ,  KC_W  ,  KC_E  ,  KC_R  ,  KC_T  ,            KC_Y  ,  KC_U  ,  KC_I  ,  KC_O  ,  KC_P  , _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______,  KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  KC_J  ,  KC_K  ,  KC_L  ,  HM_SC , _______,
+     _______,  KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  KC_J  ,  KC_K  ,  KC_L  ,  HM_SC ,K_VIMCMD,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      BR_BSLS,  HM_SZ ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,            KC_N  ,  KC_M  , KC_COMM, KC_DOT , BR_SLSH, _______,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
@@ -268,16 +267,3 @@ void persistent_default_layer_set(uint16_t default_layer) {
     eeconfig_update_default_layer(default_layer);
     default_layer_set(default_layer);
 }
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    switch (get_highest_layer(state)) {
-        case _NUMPAD:
-            // turn on numlock, if it isn't already on.
-            if (!(host_keyboard_led_state().num_lock)) {
-                register_code(KC_NUM_LOCK);
-                unregister_code(KC_NUM_LOCK);
-            }
-            break;
-    }
-    return state;
-};
