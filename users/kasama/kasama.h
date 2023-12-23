@@ -7,3 +7,4 @@
 #include "keymap_brazilian_abnt2.h"
 #include "hid.h"
 #include "auto_numlock.h"
+#include "ambidexterity.h"

@@ -12,6 +12,7 @@
 //                                        └────────┴────────┘   └────────┴────────┘
 
 // clang-format off
+#include "print.h"
 enum layers {
     _QWERTY = 0,
     _WORKMAN,
@@ -110,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     _______,  KC_Q  ,  KC_W  ,  KC_E  ,  KC_R  ,  KC_T  ,            KC_Y  ,  KC_U  ,  KC_I  ,  KC_O  ,  KC_P  , _______,
+     KC_KP_0,  KC_Q  ,  KC_W  ,  KC_E  ,  KC_R  ,  KC_T  ,            KC_Y  ,  KC_U  ,  KC_I  ,  KC_O  ,  KC_P  , _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______,  KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  KC_J  ,  KC_K  ,  KC_L  ,  HM_SC ,K_VIMCMD,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -161,9 +162,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SYS] = LAYOUT(
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     _______, QK_BOOT, KC_MB1 , KC_MU,   KC_MB2 , AC_TOGG,           KC_VOLD, KC_MUTE, KC_VOLU, _______, KC_PGUP, _______,
+   QK_REBOOT, QK_BOOT, KC_MB1 , KC_MU,   KC_MB2 , AC_TOGG,           KC_VOLD, KC_MUTE, KC_VOLU, _______, KC_PGUP, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_PGDN, _______,
+     DB_TOGG, BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_PGDN, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, BR_BSLS, KC_MPRV, KC_MPLY, KC_MNXT, TG(_WORKMAN),       KC_F23, KC_SLSH, KC_BSLS, KC_QUES, KC_PIPE, _______,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
@@ -266,4 +267,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 void persistent_default_layer_set(uint16_t default_layer) {
     eeconfig_update_default_layer(default_layer);
     default_layer_set(default_layer);
+}
+
+void keyboard_post_init_kasama(void) {
+    // debug_enable = true;
+    // uprint("test debug print\n");
 }

@@ -17,3 +17,8 @@ ifeq ($(strip $(REMOTE_CONTROL_ENABLE)), yes)
     OPT_DEFS += -DREMOTE_CONTROL_ENABLE
 endif
 endif
+
+ifeq ($(strip $(AMBIDEXTERITY_ENABLE)), yes)
+	SRC += ambidexterity.c
+    OPT_DEFS += -DAMBIDEXTERITY_ENABLE
+endif

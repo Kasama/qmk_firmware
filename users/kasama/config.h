@@ -3,4 +3,11 @@
 #define RAW_USAGE_PAGE 0xFF60
 #define RAW_USAGE_ID 0x61
 
-#endif
+#endif // REMOTE_CONTROL_ENABLE
+
+#ifdef AMBIDEXTERITY_ENABLE
+
+#define SPLIT_TRANSACTION_IDS_USER TRANSACTION_PRINT, TRANSACTION_KEYRECORD_MAPPING
+#define SPLIT_TRANSPORT_MIRROR // necessary to resolve key mappings on the slave side
+
+#endif // AMBIDEXTERITY_ENABLE

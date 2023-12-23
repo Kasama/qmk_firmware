@@ -1,10 +1,17 @@
 #include "kasama.h"
+#include "keyboard.h"
+#include "print.h"
 
 __attribute__((weak)) bool pre_process_record_kasama(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
-    return pre_process_record_kasama(keycode, record);
+
+    return
+#ifdef AMBIDEXTERITY_ENABLE
+    pre_process_ambidextrous(keycode, record) &&
+#endif
+    pre_process_record_kasama(keycode, record);
 }
 
 __attribute__((weak)) bool process_record_kasama(uint16_t keycode, keyrecord_t *record) {
@@ -40,3 +47,20 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #endif
     return layer_state_set_kasama(state);
 };
+
+__attribute__((weak)) void keyboard_pre_init_kasama(void) {}
+
+void keyboard_pre_init_user(void) {
+    keyboard_pre_init_kasama();
+}
+
+__attribute__((weak)) void keyboard_post_init_kasama(void) {}
+
+void keyboard_post_init_user(void) {
+    keyboard_post_init_kasama();
+#ifdef SPLIT_KEYBOARD
+#    ifdef AMBIDEXTERITY_ENABLE
+    initialize_ambidexterity();
+#    endif
+#endif
+}
