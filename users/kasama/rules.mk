@@ -1,4 +1,5 @@
 SRC += kasama.c
+SRC += layers.c
 
 ifeq ($(strip $(KASAMA_KEYCODES_ENABLE)), yes)
 	SRC += kasama_keycodes.c

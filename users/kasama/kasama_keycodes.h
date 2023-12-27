@@ -2,21 +2,22 @@
 
 #ifdef KASAMA_KEYCODES_ENABLE
 
-#include "quantum_keycodes.h"
-#include "action.h"
+#    include "quantum_keycodes.h"
+#    include "action.h"
 
 enum kasama_custom_keycodes {
     K_VIMCMD = SAFE_RANGE,
     KASAMA_SAFE_RANGE,
 };
 
-#undef SAFE_RANGE
-#define SAFE_RANGE KASAMA_SAFE_RANGE
+#    undef SAFE_RANGE
+#    define SAFE_RANGE KASAMA_SAFE_RANGE
 
 bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 
 #endif
 
+// mod taps and thumb keys
 #define SFT_ESC SFT_T(KC_ESC)
 #define C_BSPC CTL_T(KC_BSPC)
 #define ALT_SPC RALT_T(KC_SPC)
@@ -25,7 +26,9 @@ bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 #define SFT_ENT RSFT_T(KC_ENT)
 #define SFT_DQUO SFT_T(BR_DQUO)
 
-// homerow tap mod keys
+#define SYM_ESC LT(_SYMB, KC_ESC)
+
+// homerow mod tap
 #define HM_SA SFT_T(KC_A)
 #define HM_SZ SFT_T(KC_Z)
 #define HM_CS CTL_T(KC_S)
@@ -37,6 +40,10 @@ bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 #define HM_CL CTL_T(KC_L)
 #define HM_SC SFT_T(BR_SCLN)
 
+// other mod taps
+#define CTRL_1 CTL_T(KC_1)
+
+// Shorform names
 #define KC_ML KC_MS_LEFT
 #define KC_MR KC_MS_RIGHT
 #define KC_MU KC_MS_UP
@@ -48,3 +55,9 @@ bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 #define BR_RCBR S(BR_RBRC)
 #define BR_LCBR S(BR_LBRC)
 
+// Layer Keycodes
+#define SYSTM OSL(_SYS)
+#define NUMROW OSL(_NUMROW)
+#define SYMB OSL(_SYMB)
+#define NUMPAD MO(_NUMPAD)
+#define GAME2 MO(_GAME_NUM_2)

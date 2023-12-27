@@ -1,17 +1,15 @@
 #include "kasama.h"
 #include "keyboard.h"
-#include "print.h"
 
 __attribute__((weak)) bool pre_process_record_kasama(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
-
-    return
+    return pre_process_record_kasama(keycode, record) &&
 #ifdef AMBIDEXTERITY_ENABLE
-    pre_process_ambidextrous(keycode, record) &&
+           pre_process_ambidextrous(keycode, record) &&
 #endif
-    pre_process_record_kasama(keycode, record);
+           true;
 }
 
 __attribute__((weak)) bool process_record_kasama(uint16_t keycode, keyrecord_t *record) {
@@ -43,7 +41,7 @@ __attribute__((weak)) layer_state_t layer_state_set_kasama(layer_state_t state) 
 }
 layer_state_t layer_state_set_user(layer_state_t state) {
 #ifdef AUTO_NUMLOCK_ENABLE
-    auto_enable_numlock();
+    auto_enable_numlock(state);
 #endif
     return layer_state_set_kasama(state);
 };

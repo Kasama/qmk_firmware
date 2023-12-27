@@ -1,10 +1,11 @@
 #include "remote_control.h"
 
 #include "raw_hid.h"
+#include "layers.h"
 #include "hid.h"
 
 __attribute__((weak)) const char *get_layer_name(int layer) {
-    return "unnamed";
+    return get_common_layer_name(layer);
 }
 
 __attribute__((weak)) bool raw_hid_receive_kasama(uint8_t *data, uint8_t length) {

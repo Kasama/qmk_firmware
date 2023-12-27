@@ -10,50 +10,7 @@
 //                                      └────────┴────────┘       └────────┴────────┘
 //                                        ┌────────┬────────┐   ┌────────┬────────┐
 //                                        └────────┴────────┘   └────────┴────────┘
-
-// clang-format off
-#include "print.h"
-enum layers {
-    _QWERTY = 0,
-    _WORKMAN,
-    _SYS,
-    _NUMROW,
-    _GAME,
-    _GAME_NUM_2,
-    _SYMB,
-    _NUMPAD,
-    _TRANS = 15
-};
-
-const char* layer_names[] = {
-    [_QWERTY] = "QWERTY",
-    [_WORKMAN] = "Workman",
-    [_SYS] = "SYS",
-    [_NUMROW] = "Numrow",
-    [_GAME] = "Game",
-    [_GAME_NUM_2] = "Game 2",
-    [_SYMB] = "Symbols",
-    [_NUMPAD] = "Numpad",
-    [_TRANS] = "Trans",
-};
-// clang-format on
-
-#define AUTO_NUMLOCK_LAYERS _NUMPAD
-
 #include "kasama.h"
-
-const char *get_layer_name(int layer) {
-    return layer_names[layer];
-}
-
-#define SYSTM OSL(_SYS)
-#define NUMROW OSL(_NUMROW)
-#define SYMB OSL(_SYMB)
-
-#define COD_ESC LT(_SYMB, KC_ESC)
-
-#define NUMPAD MO(_NUMPAD)
-#define GAME2 MO(_GAME_NUM_2)
 
 // tap dance
 enum tapper_dancer {
@@ -63,14 +20,15 @@ enum tapper_dancer {
 tap_dance_action_t tap_dance_actions[] = {[TD_SYS_GUI] = ACTION_TAP_DANCE_DOUBLE(SYSTM, KC_LGUI)};
 
 // Combos
-const uint16_t PROGMEM c_escbspc[]         = {COD_ESC, C_BSPC, COMBO_END};
+const uint16_t PROGMEM c_escbspc[]         = {SYM_ESC, C_BSPC, COMBO_END};
 const uint16_t PROGMEM c_systab[]          = {SYSTM, ALT_TAB, COMBO_END};
-const uint16_t PROGMEM c_sysesc[]          = {SYSTM, COD_ESC, COMBO_END};
+const uint16_t PROGMEM c_sysesc[]          = {SYSTM, SYM_ESC, COMBO_END};
+const uint16_t PROGMEM c_sysctl[]          = {SYSTM, C_BSPC, COMBO_END};
 const uint16_t PROGMEM c_leadsftent[]      = {QK_LEAD, SFT_ENT, COMBO_END};
 const uint16_t PROGMEM c_jk[]              = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM c_lc[]              = {KC_L, HM_SC, COMBO_END};
 const uint16_t PROGMEM c_as[]              = {KC_A, KC_S, COMBO_END};
-const uint16_t PROGMEM c_zx[]              = {KC_Z, KC_X, COMBO_END};
+const uint16_t PROGMEM c_zx[]              = {HM_SZ, KC_X, COMBO_END};
 const uint16_t PROGMEM c_atab[]            = {KC_A, ALT_TAB, COMBO_END};
 const uint16_t PROGMEM c_homerow_r[]       = {KC_J, KC_K, KC_L, HM_SC, COMBO_END};
 const uint16_t PROGMEM c_idx_homerow_r[]   = {KC_H, KC_K, KC_L, HM_SC, COMBO_END};
@@ -93,8 +51,9 @@ combo_t key_combos[] = {
     COMBO(c_lc, K_VIMCMD),
     COMBO(c_homerow_l, NUMPAD),
     COMBO(c_idx_homerow_l, KC_ENTER),
-    COMBO(c_zx, OSM(MOD_LSFT)),
+    COMBO(c_zx, BR_PIPE),
     COMBO(c_atab, KC_LGUI),
+    COMBO(c_sysctl, KC_LGUI),
 };
 // clang-format on
 
@@ -119,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
                        BR_LBRC, BR_RBRC,                                               KC_MINS, KC_EQL ,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
-                                          COD_ESC,  C_BSPC,         ALT_SPC,  NUMROW,
+                                          SYM_ESC,  C_BSPC,         ALT_SPC,  NUMROW,
 //                                      └────────┴────────┘       └────────┴────────┘
 //                                        ┌────────┬────────┐   ┌────────┬────────┐
                                              SYSTM , ALT_TAB,     SFT_ENT, QK_LEAD
@@ -136,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
                       BR_LBRC , BR_RBRC,                                               KC_MINS,  KC_EQL,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
-                                          COD_ESC,  C_BSPC,         ALT_SPC,  NUMROW,
+                                          SYM_ESC,  C_BSPC,         ALT_SPC,  NUMROW,
 //                                      └────────┴────────┘       └────────┴────────┘
 //                                        ┌────────┬────────┐   ┌────────┬────────┐
                                               SYSTM, ALT_TAB,     SFT_ENT,  SYMB
@@ -147,9 +106,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______, BR_QUOT, BR_DQUO, _______, DM_REC2, DM_PLY2,          KC_PRINT, BR_LBRC, BR_RBRC, BR_GRV , BR_ACUT, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______,  KC_DEL, DM_REC1, DM_PLY1,           _______, KC_LPRN, KC_RPRN, BR_CIRC, BR_TILD, _______,
+     KC_CAPS, _______, _______,  KC_DEL, DM_REC1, DM_PLY1,           _______, KC_LPRN, KC_RPRN, BR_CIRC, BR_TILD, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     BR_PIPE, BR_BSLS, KC_CAPS, BR_CCED, _______, _______,           _______, BR_LCBR, BR_RCBR, BR_SCLN, BR_PIPE, _______,
+     _______, BR_BSLS, BR_PIPE, BR_CCED, _______, _______,           _______, BR_LCBR, BR_RCBR, BR_SCLN, BR_PIPE, _______,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
                        _______, _______,                                            S(KC_MINS), KC_PLUS,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
@@ -217,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,           _______, KC_LEFT, KC_DOWN,KC_RIGHT, _______, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,           _______, _______, _______, _______, _______, _______,
+     _______, CTRL_1 ,    KC_2,    KC_3,    KC_4,    KC_5,           _______, _______, _______, _______, _______, _______,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
                          KC_F1,   KC_F2,                                               _______, _______,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
@@ -264,12 +223,5 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-void persistent_default_layer_set(uint16_t default_layer) {
-    eeconfig_update_default_layer(default_layer);
-    default_layer_set(default_layer);
-}
-
 void keyboard_post_init_kasama(void) {
-    // debug_enable = true;
-    // uprint("test debug print\n");
 }
