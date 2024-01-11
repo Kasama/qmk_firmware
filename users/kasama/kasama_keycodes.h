@@ -50,6 +50,8 @@ bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 #define KC_MD KC_MS_DOWN
 #define KC_MB1 KC_MS_BTN1
 #define KC_MB2 KC_MS_BTN2
+#define KC_MWU KC_MS_WH_UP
+#define KC_MWD KC_MS_WH_DOWN
 #define KC_PRINT KC_PRINT_SCREEN
 
 #define BR_RCBR S(BR_RBRC)

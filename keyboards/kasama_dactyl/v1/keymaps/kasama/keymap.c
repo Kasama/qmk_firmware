@@ -121,9 +121,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SYS] = LAYOUT(
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
-   QK_REBOOT, QK_BOOT, KC_MB1 , KC_MU,   KC_MB2 , AC_TOGG,           KC_VOLD, KC_MUTE, KC_VOLU, _______, KC_PGUP, _______,
+   QK_REBOOT, QK_BOOT, KC_MB1 , KC_MU,   KC_MB2 , AC_TOGG,           KC_VOLD, KC_MUTE, KC_VOLU, _______, KC_MWU , _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     DB_TOGG, BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_PGDN, _______,
+     DB_TOGG, BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_MWD , _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, BR_BSLS, KC_MPRV, KC_MPLY, KC_MNXT, TG(_WORKMAN),       KC_F23, KC_SLSH, KC_BSLS, KC_QUES, KC_PIPE, _______,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
