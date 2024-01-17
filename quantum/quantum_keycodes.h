@@ -88,6 +88,10 @@
 #define MO(layer) (QK_MOMENTARY | ((layer)&0x1F))
 #define QK_MOMENTARY_GET_LAYER(kc) ((kc)&0x1F)
 
+// Momentary switch layer off - 32 layer max
+#define MO_OFF(layer) (QK_MOMENTARY_OFF | ((layer)&0x1F))
+#define QK_MOMENTARY_OFF_GET_LAYER(kc) ((kc)&0x1F)
+
 // Set default layer - 32 layer max
 #define DF(layer) (QK_DEF_LAYER | ((layer)&0x1F))
 #define QK_DEF_LAYER_GET_LAYER(kc) ((kc)&0x1F)

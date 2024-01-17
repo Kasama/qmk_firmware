@@ -172,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_GAME] = LAYOUT(
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     _______,  KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,           _______, _______,  KC_UP , _______, _______, _______,
+MO_OFF(_GAME), KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,           _______, _______,  KC_UP , _______, _______, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,           _______, KC_LEFT, KC_DOWN,KC_RIGHT, _______, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -223,5 +223,4 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-void keyboard_post_init_kasama(void) {
-}
+void keyboard_post_init_kasama(void) {}

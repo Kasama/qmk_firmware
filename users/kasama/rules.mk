@@ -23,3 +23,7 @@ ifeq ($(strip $(AMBIDEXTERITY_ENABLE)), yes)
 	SRC += ambidexterity.c
     OPT_DEFS += -DAMBIDEXTERITY_ENABLE
 endif
+
+ifeq ($(strip $(LEADER_ENABLE)), yes)
+	SRC += leader.c
+endif
