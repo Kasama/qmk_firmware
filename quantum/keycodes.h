@@ -1378,6 +1378,7 @@ enum qk_keycode_defines {
 #define IS_QK_LAYER_MOD(code) ((code) >= QK_LAYER_MOD && (code) <= QK_LAYER_MOD_MAX)
 #define IS_QK_TO(code) ((code) >= QK_TO && (code) <= QK_TO_MAX)
 #define IS_QK_MOMENTARY(code) ((code) >= QK_MOMENTARY && (code) <= QK_MOMENTARY_MAX)
+#define IS_QK_MOMENTARY_OFF(code) ((code) >= QK_MOMENTARY_OFF && (code) <= QK_MOMENTARY_OFF_MAX)
 #define IS_QK_DEF_LAYER(code) ((code) >= QK_DEF_LAYER && (code) <= QK_DEF_LAYER_MAX)
 #define IS_QK_TOGGLE_LAYER(code) ((code) >= QK_TOGGLE_LAYER && (code) <= QK_TOGGLE_LAYER_MAX)
 #define IS_QK_ONE_SHOT_LAYER(code) ((code) >= QK_ONE_SHOT_LAYER && (code) <= QK_ONE_SHOT_LAYER_MAX)

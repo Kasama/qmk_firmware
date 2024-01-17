@@ -180,6 +180,71 @@ TEST_F(ActionLayer, MomentaryLayerWithKeypress) {
     VERIFY_AND_CLEAR(driver);
 }
 
+TEST_F(ActionLayer, MomentaryOffLayerDoesNothing) {
+    TestDriver driver;
+    KeymapKey  layer_key = KeymapKey{0, 0, 0, MO_OFF(1)};
+
+    set_keymap({layer_key});
+
+    /* Press and release MO, nothing should happen. */
+    EXPECT_NO_REPORT(driver);
+    layer_key.press();
+    run_one_scan_loop();
+    VERIFY_AND_CLEAR(driver);
+
+    EXPECT_NO_REPORT(driver);
+    layer_key.release();
+    run_one_scan_loop();
+    VERIFY_AND_CLEAR(driver);
+}
+
+TEST_F(ActionLayer, MomentaryOffLayerWithKeypress) {
+    TestDriver driver;
+    KeymapKey  toggle_layer_1 = KeymapKey{0, 1, 1, TO(1)};
+    KeymapKey  layer_key      = KeymapKey{1, 0, 0, MO_OFF(1)};
+
+    /* These keys must have the same position in the matrix, only the layer is different. */
+    KeymapKey regular_key = KeymapKey{0, 1, 0, KC_A};
+    set_keymap({toggle_layer_1, layer_key, regular_key, KeymapKey{1, 1, 0, KC_B}});
+
+    EXPECT_NO_REPORT(driver);
+    /* tap TO */
+    toggle_layer_1.press();
+    run_one_scan_loop();
+    toggle_layer_1.release();
+    run_one_scan_loop();
+    EXPECT_TRUE(layer_state_is(1));
+    VERIFY_AND_CLEAR(driver);
+
+    /* hold MO_OFF */
+    EXPECT_NO_REPORT(driver);
+    layer_key.press();
+    run_one_scan_loop();
+    EXPECT_TRUE(layer_state_is(0));
+    VERIFY_AND_CLEAR(driver);
+
+    /* Press key on layer 0 */
+    EXPECT_REPORT(driver, (KC_A)).Times(1);
+    regular_key.press();
+    run_one_scan_loop();
+    EXPECT_TRUE(layer_state_is(0));
+    VERIFY_AND_CLEAR(driver);
+
+    /* Release key on layer 0 */
+    EXPECT_EMPTY_REPORT(driver);
+    regular_key.release();
+    run_one_scan_loop();
+    EXPECT_TRUE(layer_state_is(0));
+    VERIFY_AND_CLEAR(driver);
+
+    /* Release MO_OFF */
+    EXPECT_NO_REPORT(driver);
+    layer_key.release();
+    run_one_scan_loop();
+    EXPECT_TRUE(layer_state_is(1));
+    VERIFY_AND_CLEAR(driver);
+}
+
 TEST_F(ActionLayer, ToggleLayerDoesNothing) {
     GTEST_SKIP() << "TODO: Toggle layer does not activate the expected layer on key press but on release.";
 

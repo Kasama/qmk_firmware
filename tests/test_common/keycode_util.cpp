@@ -92,6 +92,8 @@ std::string generate_identifier(uint16_t kc) {
         s << "TO(" << +QK_TO_GET_LAYER(kc) << ")";
     } else if (IS_QK_MOMENTARY(kc)) {
         s << "MO(" << +QK_MOMENTARY_GET_LAYER(kc) << ")";
+    } else if (IS_QK_MOMENTARY_OFF(kc)) {
+        s << "MO_OFF(" << +QK_MOMENTARY_OFF_GET_LAYER(kc) << ")";
     } else if (IS_QK_DEF_LAYER(kc)) {
         s << "DF(" << +QK_DEF_LAYER_GET_LAYER(kc) << ")";
     } else if (IS_QK_TOGGLE_LAYER(kc)) {
