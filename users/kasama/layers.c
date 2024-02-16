@@ -1,4 +1,5 @@
 #include "layers.h"
+#include <stdint.h>
 
 // clang-format off
 const char* layer_names[] = {
@@ -15,5 +16,9 @@ const char* layer_names[] = {
 
 const char* get_common_layer_name(int layer) {
     return layer_names[layer];
+}
+
+uint8_t get_num_layers() {
+    return sizeof(layer_names);
 }
 // clang-format on

@@ -11,6 +11,7 @@
 //                                        ┌────────┬────────┐   ┌────────┬────────┐
 //                                        └────────┴────────┘   └────────┴────────┘
 #include "kasama.h"
+#include "action_tapping.h"
 
 // tap dance
 enum tapper_dancer {
@@ -58,11 +59,16 @@ combo_t key_combos[] = {
 // clang-format on
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
-    if (get_highest_layer(layer_state) == _GAME || get_highest_layer(layer_state) == _GAME_NUM_2) {
-        return false;
+    if (key_combos[combo_index].keys == &c_systab[0]) {
+        return true;
     }
-
-    return true;
+    switch (get_highest_layer(layer_state)) {
+        case _GAME:
+        case _GAME_NUM_2:
+            return false;
+        default:
+            return true;
+    }
 }
 
 // clang-format off
@@ -72,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______,  KC_Q  ,  KC_W  ,  KC_E  ,  KC_R  ,  KC_T  ,            KC_Y  ,  KC_U  ,  KC_I  ,  KC_O  ,  KC_P  , _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______,  KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  KC_J  ,  KC_K  ,  KC_L  ,  HM_SC ,K_VIMCMD,
+OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  KC_J  ,  KC_K  ,  KC_L  ,  HM_SC ,K_VIMCMD,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      BR_BSLS,  HM_SZ ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,            KC_N  ,  KC_M  , KC_COMM, KC_DOT , BR_SLSH, _______,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
@@ -106,11 +112,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______, BR_QUOT, BR_DQUO, _______, DM_REC2, DM_PLY2,          KC_PRINT, BR_LBRC, BR_RBRC, BR_GRV , BR_ACUT, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_CAPS, _______, _______,  KC_DEL, DM_REC1, DM_PLY1,           _______, KC_LPRN, KC_RPRN, BR_CIRC, BR_TILD, _______,
+     CW_TOGG, _______, _______,  KC_DEL, DM_REC1, DM_PLY1,           _______, KC_LPRN, KC_RPRN, BR_CIRC, BR_TILD, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, BR_BSLS, BR_PIPE, BR_CCED, _______, _______,           _______, BR_LCBR, BR_RCBR, BR_SCLN, BR_PIPE, _______,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
-                       _______, _______,                                            S(KC_MINS), KC_PLUS,
+                         KC_LT,   KC_GT,                                               KC_UNDS, KC_PLUS,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
                                           _______, _______,         _______, _______,
 //                                      └────────┴────────┘       └────────┴────────┘
@@ -224,3 +230,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 void keyboard_post_init_kasama(void) {}
+
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SYM_ESC:
+            return true;
+        default:
+            return false;
+    }
+}
