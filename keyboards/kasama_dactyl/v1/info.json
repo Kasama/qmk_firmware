@@ -9,7 +9,7 @@
         "caps_word": true,
         "combo": false,
         "command": true,
-        "console": false,
+        "console": true,
         "extrakey": true,
         "mousekey": true,
         "nkro": true,
@@ -27,6 +27,12 @@
         "enabled": true,
         "handedness":{
             "pin": "GP26"
+        },
+        "matrix_pins": {
+            "right": {
+                "cols": ["GP2", "GP3", "GP4", "GP5", "GP6", "GP7"],
+                "rows": ["GP10", "GP11", "GP15", "GP13"]
+            }
         }
     },
     "usb": {

@@ -21,12 +21,12 @@ enum tapper_dancer {
 tap_dance_action_t tap_dance_actions[] = {[TD_SYS_GUI] = ACTION_TAP_DANCE_DOUBLE(SYSTM, KC_LGUI)};
 
 // Combos
-const uint16_t PROGMEM c_escbspc[]         = {SYM_ESC, C_BSPC, COMBO_END};
-const uint16_t PROGMEM c_systab[]          = {SYSTM, ALT_TAB, COMBO_END};
-const uint16_t PROGMEM c_sysesc[]          = {SYSTM, SYM_ESC, COMBO_END};
-const uint16_t PROGMEM c_sysctl[]          = {SYSTM, C_BSPC, COMBO_END};
-const uint16_t PROGMEM c_leadsftent[]      = {QK_LEAD, SFT_ENT, COMBO_END};
-const uint16_t PROGMEM c_jk[]              = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM c_escbspc[]    = {SYM_ESC, C_BSPC, COMBO_END};
+const uint16_t PROGMEM c_systab[]     = {SYSTM, ALT_TAB, COMBO_END};
+const uint16_t PROGMEM c_sysesc[]     = {SYSTM, SYM_ESC, COMBO_END};
+const uint16_t PROGMEM c_sysctl[]     = {SYSTM, C_BSPC, COMBO_END};
+const uint16_t PROGMEM c_leadsftent[] = {QK_LEAD, SFT_ENT, COMBO_END};
+// const uint16_t PROGMEM c_jk[]              = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM c_lc[]              = {KC_L, HM_SC, COMBO_END};
 const uint16_t PROGMEM c_as[]              = {KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM c_zx[]              = {HM_SZ, KC_X, COMBO_END};
@@ -42,7 +42,7 @@ const uint16_t PROGMEM c_idx_homerow_l[]   = {KC_A, KC_S, KC_D, KC_G, COMBO_END}
 
 // clang-format off
 combo_t key_combos[] = {
-    COMBO(c_jk, KC_ESC),
+    // COMBO(c_jk, KC_ESC),
     COMBO(c_escbspc, LM(_NUMROW, MOD_LGUI)),
     COMBO(c_systab, LM(_NUMROW, MOD_LGUI)),
     COMBO(c_leadsftent, SYSTM),
@@ -127,9 +127,9 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 
     [_SYS] = LAYOUT(
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
-   QK_REBOOT, QK_BOOT, KC_MB1 , KC_MU,   KC_MB2 , AC_TOGG,           KC_VOLD, KC_MUTE, KC_VOLU, _______, KC_MWU , _______,
+   QK_REBOOT, QK_BOOT, KC_MB1 , KC_MU,   KC_MB2 , AC_TOGG,           KC_VOLD, KC_MUTE, KC_VOLU, _______, KC_MWU , KC_PGUP,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     DB_TOGG, BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_MWD , _______,
+     DB_TOGG, BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_MWD , KC_PGDN,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, BR_BSLS, KC_MPRV, KC_MPLY, KC_MNXT, TG(_WORKMAN),       KC_F23, KC_SLSH, KC_BSLS, KC_QUES, KC_PIPE, _______,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
@@ -152,7 +152,7 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
                         KC_F11,  KC_F12,                                               _______, _______,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
-                                        TG(_GAME), _______,         _______, _______,
+                                          _______, _______,         _______, _______,
 //                                      └────────┴────────┘       └────────┴────────┘
 //                                        ┌────────┬────────┐   ┌────────┬────────┐
                                             _______, _______,     _______, _______
@@ -229,7 +229,10 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 };
 // clang-format on
 
-void keyboard_post_init_kasama(void) {}
+void keyboard_post_init_kasama(void) {
+    debug_enable=true;
+    debug_matrix=true;
+}
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
