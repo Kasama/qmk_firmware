@@ -1,4 +1,5 @@
 #pragma once
+#include <stdint.h>
 #ifndef COMMON_LAYERS
 #    define COMMON_LAYERS
 
