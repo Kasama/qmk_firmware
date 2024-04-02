@@ -8,6 +8,44 @@
     "pid": "0x5244",
     "device_version": "1.0.0"
   },
+<<<<<<< HEAD
+||||||| b7468f4785
+  "rgblight": {
+    "led_count": 14,
+    "split": true
+  },
+=======
+  "features":{
+    "bootmagic": true,
+    "command": true,
+    "console": false,
+    "mousekey": true,
+    "extrakey": true,
+    "nkro": true,
+    "rgblight": true
+  },
+  "split":{
+    "enabled": true
+  },
+  "rgblight": {
+    "led_count": 14,
+    "split": true,
+    "saturation_steps": 8,
+    "brightness_steps": 8,
+    "animations": {
+      "alternating": true,
+      "breathing": true,
+      "christmas": true,
+      "knight": true,
+      "rainbow_mood": true,
+      "rainbow_swirl": true,
+      "rgb_test": true,
+      "snake": true,
+      "static_gradient": true,
+      "twinkle": true
+    }
+  },
+>>>>>>> b108524314047b947031d1cb688e2a378cf586c7
   "layouts": {
     "LAYOUT": {
       "layout": [
