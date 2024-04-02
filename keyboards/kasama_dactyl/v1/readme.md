@@ -10,23 +10,11 @@
 
 Make example for this keyboard (after setting up your build environment):
 
-<<<<<<<< HEAD:keyboards/kasama_dactyl/v1/readme.md
     make kasama_dactyl/v1:default
-|||||||| b7468f4785:keyboards/synapse/readme.md
-    make synapse:default
-========
-    make p3d/synapse:default
->>>>>>>> b108524314047b947031d1cb688e2a378cf586c7:keyboards/p3d/synapse/readme.md
 
 Flashing example for this keyboard:
 
-<<<<<<<< HEAD:keyboards/kasama_dactyl/v1/readme.md
     make kasama_dactyl/v1:default:flash
-|||||||| b7468f4785:keyboards/synapse/readme.md
-    make synapse:default:flash
-========
-    make p3d/synapse:default:flash
->>>>>>>> b108524314047b947031d1cb688e2a378cf586c7:keyboards/p3d/synapse/readme.md
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
 
