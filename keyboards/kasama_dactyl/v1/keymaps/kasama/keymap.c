@@ -21,15 +21,24 @@ enum tapper_dancer {
 tap_dance_action_t tap_dance_actions[] = {[TD_SYS_GUI] = ACTION_TAP_DANCE_DOUBLE(SYSTM, KC_LGUI)};
 
 // Combos
-const uint16_t PROGMEM c_escbspc[]    = {SYM_ESC, C_BSPC, COMBO_END};
-const uint16_t PROGMEM c_systab[]     = {SYSTM, ALT_TAB, COMBO_END};
-const uint16_t PROGMEM c_sysesc[]     = {SYSTM, SYM_ESC, COMBO_END};
-const uint16_t PROGMEM c_sysctl[]     = {SYSTM, C_BSPC, COMBO_END};
-const uint16_t PROGMEM c_leadsftent[] = {QK_LEAD, SFT_ENT, COMBO_END};
-// const uint16_t PROGMEM c_jk[]              = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM c_escbspc[]         = {SYM_ESC, C_BSPC, COMBO_END};
+const uint16_t PROGMEM c_systab[]          = {SYSTM, ALT_TAB, COMBO_END};
+const uint16_t PROGMEM c_sysesc[]          = {SYSTM, SYM_ESC, COMBO_END};
+const uint16_t PROGMEM c_sysctl[]          = {SYSTM, C_BSPC, COMBO_END};
+const uint16_t PROGMEM c_leadsftent[]      = {QK_LEAD, SFT_ENT, COMBO_END};
+const uint16_t PROGMEM c_jk[]              = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM c_kl[]              = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM c_jl[]              = {KC_J, KC_L, COMBO_END};
 const uint16_t PROGMEM c_lc[]              = {KC_L, HM_SC, COMBO_END};
 const uint16_t PROGMEM c_as[]              = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM c_sd[]              = {KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM c_df[]              = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM c_sf[]              = {KC_S, KC_F, COMBO_END};
 const uint16_t PROGMEM c_zx[]              = {HM_SZ, KC_X, COMBO_END};
+const uint16_t PROGMEM c_xc[]              = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM c_mcomma[]          = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM c_commaperiod[]     = {KC_COMM, BR_DOT, COMBO_END};
+const uint16_t PROGMEM c_fj[]              = {KC_F, KC_J, COMBO_END};
 const uint16_t PROGMEM c_atab[]            = {KC_A, ALT_TAB, COMBO_END};
 const uint16_t PROGMEM c_homerow_r[]       = {KC_J, KC_K, KC_L, HM_SC, COMBO_END};
 const uint16_t PROGMEM c_idx_homerow_r[]   = {KC_H, KC_K, KC_L, HM_SC, COMBO_END};
@@ -42,7 +51,19 @@ const uint16_t PROGMEM c_idx_homerow_l[]   = {KC_A, KC_S, KC_D, KC_G, COMBO_END}
 
 // clang-format off
 combo_t key_combos[] = {
-    // COMBO(c_jk, KC_ESC),
+    // (){}[]<> combos
+    COMBO(c_jk, BR_RPRN),
+    COMBO(c_df, BR_LPRN),
+    COMBO(c_kl, BR_RCBR),
+    COMBO(c_sd, BR_LCBR),
+    COMBO(c_jl, BR_RBRC),
+    COMBO(c_sf, BR_LBRC),
+    COMBO(c_xc, BR_LESS),
+    COMBO(c_commaperiod, BR_GRTR),
+
+    COMBO(c_fj, CW_TOGG),
+    COMBO(c_mcomma, BR_UNDS),
+
     COMBO(c_escbspc, LM(_NUMROW, MOD_LGUI)),
     COMBO(c_systab, LM(_NUMROW, MOD_LGUI)),
     COMBO(c_leadsftent, SYSTM),

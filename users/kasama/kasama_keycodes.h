@@ -56,6 +56,8 @@ bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 
 #define BR_RCBR S(BR_RBRC)
 #define BR_LCBR S(BR_LBRC)
+#define BR_LESS S(BR_COMM)
+#define BR_GRTR S(BR_DOT)
 
 // Layer Keycodes
 #define SYSTM OSL(_SYS)
