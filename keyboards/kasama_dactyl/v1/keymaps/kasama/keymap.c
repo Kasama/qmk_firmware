@@ -148,7 +148,7 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 
     [_SYS] = LAYOUT(
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
-   QK_REBOOT, QK_BOOT, KC_MB1 , KC_MU,   KC_MB2 , AC_TOGG,           KC_VOLD, KC_MUTE, KC_VOLU, _______, KC_MWU , KC_PGUP,
+   QK_REBOOT, QK_BOOT, KC_MB1 , KC_MU,   KC_MB2 , AC_TOGG,           _______, KC_VOLD, KC_MUTE, KC_VOLU, KC_MWU , KC_PGUP,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      DB_TOGG, BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_MWD , KC_PGDN,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
