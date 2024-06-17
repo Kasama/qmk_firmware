@@ -1,4 +1,4 @@
-#include "leader.h"
+#include "kasama_leader.h"
 #include "keycodes.h"
 
 __attribute__((weak)) void leader_start_kasama(void) {}

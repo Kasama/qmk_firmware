@@ -7,6 +7,8 @@
 
 enum kasama_custom_keycodes {
     K_VIMCMD = SAFE_RANGE,
+    K_XSET,
+    K_EMAIL,
     KASAMA_SAFE_RANGE,
 };
 
@@ -21,9 +23,11 @@ bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 #define SFT_ESC SFT_T(KC_ESC)
 #define C_BSPC CTL_T(KC_BSPC)
 #define ALT_SPC RALT_T(KC_SPC)
+#define SFT_SPC SFT_T(KC_SPC)
 #define ALT_TAB ALT_T(KC_TAB)
 #define ALT_LBC ALT_T(KC_TAB)
 #define SFT_ENT RSFT_T(KC_ENT)
+#define RALT_ENT RALT_T(KC_ENT)
 #define SFT_DQUO SFT_T(BR_DQUO)
 
 #define SYM_ESC LT(_SYMB, KC_ESC)

@@ -17,7 +17,6 @@
         } while (0)
 
 #    define LEADER(seq, body) \
-        else if (seq) {       \
-            body;             \
-        }
+        else if (seq)         \
+            body
 #endif

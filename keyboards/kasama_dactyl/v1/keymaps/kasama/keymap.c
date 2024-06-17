@@ -10,8 +10,12 @@
 //                                      └────────┴────────┘       └────────┴────────┘
 //                                        ┌────────┬────────┐   ┌────────┬────────┐
 //                                        └────────┴────────┘   └────────┴────────┘
+#include "action.h"
 #include "kasama.h"
+#include "kasama_leader.h"
 #include "action_tapping.h"
+#include "keycodes.h"
+#include "send_string_keycodes.h"
 
 // tap dance
 enum tapper_dancer {
@@ -92,6 +96,18 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
     }
 }
 
+void leader_end_kasama(void) {
+    DEFINE_LEADERS(
+        // Delete whole line, similar to vim's dd command
+        LEADER(LEADER_SEQ(KC_D, KC_D), {
+            tap_code(KC_HOME);
+            register_code(KC_LSFT);
+            tap_code(KC_END);
+            unregister_code(KC_LSFT);
+            tap_code(KC_DEL);
+        }) LEADER(LEADER_SEQ(KC_U), { SEND_STRING(SS_LCTL("z")); }));
+}
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -105,10 +121,10 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
                        BR_LBRC, BR_RBRC,                                               KC_MINS, KC_EQL ,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
-                                          SYM_ESC,  C_BSPC,         ALT_SPC,  NUMROW,
+                                          SYM_ESC,  C_BSPC,         SFT_SPC,  NUMROW,
 //                                      └────────┴────────┘       └────────┴────────┘
 //                                        ┌────────┬────────┐   ┌────────┬────────┐
-                                             SYSTM , ALT_TAB,     SFT_ENT, QK_LEAD
+                                             SYSTM , ALT_TAB,    RALT_ENT, QK_LEAD
 //                                        └────────┴────────┘   └────────┴────────┘
     ),
 
@@ -120,12 +136,12 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______,  KC_Z  ,  KC_X  ,  KC_M  ,  KC_C  ,  KC_V  ,            KC_K  ,  KC_L  , KC_COMM, KC_DOT , BR_SLSH, _______,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
-                      BR_LBRC , BR_RBRC,                                               KC_MINS,  KC_EQL,
+                       BR_LBRC, BR_RBRC,                                               KC_MINS, KC_EQL ,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
-                                          SYM_ESC,  C_BSPC,         ALT_SPC,  NUMROW,
+                                          _______, _______,         _______, _______,
 //                                      └────────┴────────┘       └────────┴────────┘
 //                                        ┌────────┬────────┐   ┌────────┬────────┐
-                                              SYSTM, ALT_TAB,     SFT_ENT,  SYMB
+                                            _______, _______,     _______,  SYMB
 //                                        └────────┴────────┘   └────────┴────────┘
     ),
 
@@ -135,7 +151,7 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      CW_TOGG, _______, _______,  KC_DEL, DM_REC1, DM_PLY1,           _______, KC_LPRN, KC_RPRN, BR_CIRC, BR_TILD, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, BR_BSLS, BR_PIPE, BR_CCED, _______, _______,           _______, BR_LCBR, BR_RCBR, BR_SCLN, BR_PIPE, _______,
+     _______, BR_BSLS, BR_PIPE, BR_CCED, _______, _______,           _______, BR_LCBR, BR_RCBR, BR_SCLN, BR_PIPE, K_EMAIL,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
                          KC_LT,   KC_GT,                                               KC_UNDS, KC_PLUS,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
@@ -148,11 +164,11 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 
     [_SYS] = LAYOUT(
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
-   QK_REBOOT, QK_BOOT, KC_MB1 , KC_MU,   KC_MB2 , AC_TOGG,           _______, KC_VOLD, KC_MUTE, KC_VOLU, KC_MWU , KC_PGUP,
+   QK_REBOOT, QK_BOOT, KC_MB2 , KC_MU,   KC_MB1 , AC_TOGG,           _______, KC_VOLD, KC_MUTE, KC_VOLU, KC_MWU , KC_PGUP,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     DB_TOGG, BR_QUOT, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_MWD , KC_PGDN,
+     DB_TOGG, _______, KC_ML,   KC_MD,   KC_MR,   KC_F23 ,           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_MWD , KC_PGDN,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, BR_BSLS, KC_MPRV, KC_MPLY, KC_MNXT, TG(_WORKMAN),       KC_F23, KC_SLSH, KC_BSLS, KC_QUES, KC_PIPE, _______,
+     _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, TG(_WORKMAN),       KC_F23, _______, _______, KC_HOME,  KC_END, K_XSET ,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
                QK_COMBO_TOGGLE, _______,                                                KC_MB1,  KC_MB2,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘

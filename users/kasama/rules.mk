@@ -25,7 +25,7 @@ ifeq ($(strip $(AMBIDEXTERITY_ENABLE)), yes)
 endif
 
 ifeq ($(strip $(LEADER_ENABLE)), yes)
-	SRC += leader.c
+	SRC += kasama_leader.c
 endif
 
 ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
