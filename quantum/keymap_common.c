@@ -114,11 +114,6 @@ action_t action_for_keycode(uint16_t keycode) {
             action_layer = QK_MOMENTARY_GET_LAYER(keycode);
             action.code  = ACTION_LAYER_MOMENTARY(action_layer);
             break;
-        case QK_MOMENTARY_OFF ... QK_MOMENTARY_OFF:;
-            // Momentary turn off action_layer
-            action_layer = QK_MOMENTARY_OFF_GET_LAYER(keycode);
-            action.code  = ACTION_LAYER_MOMENTARY_OFF(action_layer);
-            break;
         case QK_DEF_LAYER ... QK_DEF_LAYER_MAX:;
             // Set default action_layer
             action_layer = QK_DEF_LAYER_GET_LAYER(keycode);
