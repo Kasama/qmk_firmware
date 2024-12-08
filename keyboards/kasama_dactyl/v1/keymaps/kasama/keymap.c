@@ -16,13 +16,13 @@
 #include "action_tapping.h"
 #include "keycodes.h"
 #include "send_string_keycodes.h"
+#include "tap_dance.h"
 
-// tap dance
-enum tapper_dancer {
-    TD_SYS_GUI,
-};
+// Tap dance enums
+enum { TD_SFT_SPC_DEF, TD_DEFINITIONS_LEN };
 
-tap_dance_action_t tap_dance_actions[] = {[TD_SYS_GUI] = ACTION_TAP_DANCE_DOUBLE(SYSTM, KC_LGUI)};
+#define TD_SFT_SPC TD(TD_SFT_SPC_DEF)
+tap_dance_action_t tap_dance_actions[] = {[TD_SFT_SPC_DEF] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, spc_shift_finished, spc_shift_reset)};
 
 // Combos
 const uint16_t PROGMEM c_escbspc[]         = {SYM_ESC, C_BSPC, COMBO_END};
@@ -83,7 +83,8 @@ combo_t key_combos[] = {
 };
 // clang-format on
 
-#define KC_REPLAY S(C(A(KC_P)))
+#define KC_REPLAY S(C(A(KC_L)))
+#define KC_CLIP S(C(A(KC_P)))
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
     if (key_combos[combo_index].keys == &c_systab[0]) {
@@ -123,7 +124,7 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
                        BR_LBRC, BR_RBRC,                                               KC_MINS, KC_EQL ,
 //                   └────────┴────────┘┌────────┬────────┐       ┌────────┬────────┐└────────┴────────┘
-                                          SYM_ESC,  C_BSPC,         SFT_SPC,  NUMROW,
+                                          SYM_ESC,  C_BSPC,      TD_SFT_SPC,  NUMROW,
 //                                      └────────┴────────┘       └────────┴────────┘
 //                                        ┌────────┬────────┐   ┌────────┬────────┐
                                              SYSTM , ALT_TAB,    RALT_ENT, QK_LEAD
@@ -236,7 +237,7 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 // ┌────────┬────────┬────────┬────────┬────────┬────────┐         ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______, _______, _______, _______, _______,   KC_F3,           _______, _______, _______, _______, _______, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______,KC_REPLAY,   KC_M,    KC_Y,    KC_J,    KC_H,           _______, _______, _______, _______, _______, _______,
+   KC_REPLAY, KC_CLIP,    KC_M,    KC_Y,    KC_J,    KC_H,           _______, _______, _______, _______, _______, _______,
 // ├────────┼────────┼────────┼────────┼────────┼────────┤         ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,           _______, _______, _______, _______, _______, _______,
 // └────────┴────────┼────────┼────────┼────────┴────────┘         └────────┴────────┼────────┼────────┼────────┴────────┘
@@ -270,7 +271,7 @@ OSM(MOD_LSFT), KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,            KC_H  ,  K
 
 void keyboard_post_init_kasama(void) {
     debug_enable = true;
-    debug_matrix = true;
+    debug_matrix = false;
 }
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {

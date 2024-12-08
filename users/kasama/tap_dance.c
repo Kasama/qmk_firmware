@@ -1,4 +1,13 @@
 #include "tap_dance.h"
+#include "action.h"
+#include "action_util.h"
+#include "keycodes.h"
+
+#define SPC_SHIFT_TAP_DANCE_DEBUG 0
+// #define SPC_SHIFT_TAP_DANCE_DEBUG 1
+#if SPC_SHIFT_TAP_DANCE_DEBUG != 0
+#include "print.h"
+#endif
 
 /* Return an integer that corresponds to what kind of tap dance should be executed.
  *
@@ -29,32 +38,77 @@
  */
 td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
-        if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
-        // Key has not been interrupted, but the key is still held. Means you want to send a 'HOLD'.
-        else
+        if (state->interrupted || !state->pressed) {
+            return TD_SINGLE_TAP;
+        } else {
+            // Key has not been interrupted, but the key is still held. Means you want to send a 'HOLD'.
             return TD_SINGLE_HOLD;
+        }
     } else if (state->count == 2) {
         // TD_DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
         // action when hitting 'pp'. Suggested use case for this return value is when you want to send two
         // keystrokes of the key, and not the 'double tap' action/macro.
-        if (state->interrupted)
+        if (state->interrupted) {
             return TD_DOUBLE_SINGLE_TAP;
-        else if (state->pressed)
+        } else if (state->pressed) {
             return TD_DOUBLE_HOLD;
-        else
+        } else {
             return TD_DOUBLE_TAP;
+        }
     }
 
     // Assumes no one is trying to type the same letter three times (at least not quickly).
     // If your tap dance key is 'KC_W', and you want to type "www." quickly - then you will need to add
     // an exception here to return a 'TD_TRIPLE_SINGLE_TAP', and define that enum just like 'TD_DOUBLE_SINGLE_TAP'
     if (state->count == 3) {
-        if (state->interrupted || !state->pressed)
+        if (state->interrupted || !state->pressed) {
             return TD_TRIPLE_TAP;
-        else
+        } else {
             return TD_TRIPLE_HOLD;
-    } else
+        }
+    } else {
         return TD_UNKNOWN;
+    }
+}
+
+static uint8_t spc_shift_state = KC_NO;
+
+void spc_shift_finished(tap_dance_state_t *state, void *user_data) {
+#if SPC_SHIFT_TAP_DANCE_DEBUG != 0
+    print("finished pressing spc_sft. count: ");
+    print_dec(state->count);
+    print(" interrupted: ");
+    print_dec(state->interrupted);
+    print("\n");
+#endif
+    if ((state->interrupted && state->pressed) || (state->pressed && state->count <= 2)) {
+        spc_shift_state = KC_LSFT;
+    } else {
+        spc_shift_state = KC_SPACE;
+    }
+    for (int i = state->count - 1; i > 0; i--) {
+        tap_code(KC_SPACE);
+    }
+
+    if (spc_shift_state == KC_LSFT && state->count > 1) {
+        add_oneshot_mods(MOD_LSFT);
+        spc_shift_state = KC_NO;
+    } else {
+        register_code(spc_shift_state);
+    }
+}
+void spc_shift_reset(tap_dance_state_t *state, void *user_data) {
+#if SPC_SHIFT_TAP_DANCE_DEBUG != 0
+    print("resetting spc_sft. SFT: ");
+    print_dec(KC_LSFT);
+    print(" SPC: ");
+    print_dec(KC_SPACE);
+    print(". State: ");
+    print_dec(spc_shift_state.keycode);
+    print("\n");
+#endif
+    unregister_code(spc_shift_state);
+    spc_shift_state = KC_NO;
 }
 
 // Create an instance of 'td_tap_t' for the 'x' tap dance.
