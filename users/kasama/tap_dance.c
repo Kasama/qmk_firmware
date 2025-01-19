@@ -6,7 +6,7 @@
 #define SPC_SHIFT_TAP_DANCE_DEBUG 0
 // #define SPC_SHIFT_TAP_DANCE_DEBUG 1
 #if SPC_SHIFT_TAP_DANCE_DEBUG != 0
-#include "print.h"
+#    include "print.h"
 #endif
 
 /* Return an integer that corresponds to what kind of tap dance should be executed.
@@ -104,12 +104,56 @@ void spc_shift_reset(tap_dance_state_t *state, void *user_data) {
     print(" SPC: ");
     print_dec(KC_SPACE);
     print(". State: ");
-    print_dec(spc_shift_state.keycode);
+    print_dec(spc_shift_state);
     print("\n");
 #endif
+    clear_oneshot_mods();
     unregister_code(spc_shift_state);
     spc_shift_state = KC_NO;
 }
+
+#if 0
+static uint8_t magic_backspace_state = KC_NO;
+
+void magic_basckspace_finished(tap_dance_state_t *state, void *user_data) {
+#    if SPC_SHIFT_TAP_DANCE_DEBUG != 0
+    print("finished pressing spc_sft. count: ");
+    print_dec(state->count);
+    print(" interrupted: ");
+    print_dec(state->interrupted);
+    print("\n");
+#    endif
+    if ((state->interrupted && state->pressed) || (state->pressed && state->count <= 2)) {
+        spc_shift_state = KC_LSFT;
+    } else {
+        spc_shift_state = KC_SPACE;
+    }
+    for (int i = state->count - 1; i > 0; i--) {
+        tap_code(KC_SPACE);
+    }
+
+    if (spc_shift_state == KC_LSFT && state->count > 1) {
+        add_oneshot_mods(MOD_LSFT);
+        spc_shift_state = KC_NO;
+    } else {
+        register_code(spc_shift_state);
+    }
+}
+void magic_basckspace_reset(tap_dance_state_t *state, void *user_data) {
+#    if SPC_SHIFT_TAP_DANCE_DEBUG != 0
+    print("resetting spc_sft. SFT: ");
+    print_dec(KC_LSFT);
+    print(" SPC: ");
+    print_dec(KC_SPACE);
+    print(". State: ");
+    print_dec(spc_shift_state);
+    print("\n");
+#    endif
+    clear_oneshot_mods();
+    unregister_code(spc_shift_state);
+    spc_shift_state = KC_NO;
+}
+#endif
 
 // Create an instance of 'td_tap_t' for the 'x' tap dance.
 static td_tap_t xtap_state = {.is_press_action = true, .state = TD_NONE};

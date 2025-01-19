@@ -1,0 +1,35 @@
+{
+    "manufacturer": "Kasama",
+    "keyboard_name": "mouse_test",
+    "maintainer": "Kasama",
+    "processor": "RP2040",
+    "bootloader": "rp2040",
+    "diode_direction": "COL2ROW",
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": true,
+        "debug": true,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "pointing_device": true
+    },
+    "matrix_pins": {
+        "cols": ["GP15"],
+        "rows": ["GP14"]
+    },
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                {"matrix": [0, 0], "x": 0, "y": 0}
+            ]
+        }
+    }
+}

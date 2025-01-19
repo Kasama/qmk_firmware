@@ -13,6 +13,7 @@ enum layers {
     _NUMROW,
     _SYMB,
     _NUMPAD,
+    _STENO,
     _TRANS = 15
 };
 // clang-format on

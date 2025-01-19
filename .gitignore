@@ -130,4 +130,5 @@ via*.json
 !/keyboards/redox
 !/keyboards/virtual
 !/keyboards/proto_madness
+!/keyboards/mouse_test
 # Add new keyboards here

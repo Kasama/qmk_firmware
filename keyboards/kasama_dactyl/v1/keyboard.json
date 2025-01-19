@@ -15,7 +15,8 @@
         "nkro": true,
         "tap_dance": false,
         "raw": false,
-        "leader": true
+        "leader": true,
+        "steno": true
     },
     "matrix_pins": {
         "cols": ["GP2", "GP3", "GP4", "GP5", "GP6", "GP7"],
