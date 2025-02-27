@@ -20,6 +20,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef KASAMA_KEYCODES_ENABLE
            process_record_custom_keycode(keycode, record) &&
 #endif
+#ifdef MOUSE_JIGGLE_ENABLE
+           process_record_mouse_jiggler(keycode, record) &&
+#endif
            true;
 }
 
@@ -61,4 +64,13 @@ void keyboard_post_init_user(void) {
     initialize_ambidexterity();
 #    endif
 #endif
+}
+
+__attribute__((weak)) void matrix_scan_kasama(void) {}
+
+void matrix_scan_user(void) {
+#ifdef MOUSE_JIGGLE_ENABLE
+    matrix_scan_mouse_jiggler();
+#endif
+    matrix_scan_kasama();
 }

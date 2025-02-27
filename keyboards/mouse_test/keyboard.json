@@ -16,8 +16,8 @@
         "pointing_device": true
     },
     "matrix_pins": {
-        "cols": ["GP15"],
-        "rows": ["GP14"]
+        "cols": ["GP2"],
+        "rows": ["GP13"]
     },
     "url": "",
     "usb": {

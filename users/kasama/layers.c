@@ -12,6 +12,7 @@ const char* layer_names[] = {
     [_SYMB] = "Symbols",
     [_NUMPAD] = "Numpad",
     [_TRANS] = "Trans",
+    [_STENO] = "Steno"
 };
 
 const char* get_common_layer_name(int layer) {

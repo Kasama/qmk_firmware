@@ -131,4 +131,5 @@ via*.json
 !/keyboards/virtual
 !/keyboards/proto_madness
 !/keyboards/mouse_test
+!/keyboards/kasama_macropad
 # Add new keyboards here

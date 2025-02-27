@@ -14,3 +14,4 @@ KASAMA_KEYCODES_ENABLE = yes
 AUTO_NUMLOCK_ENABLE = yes
 # Support for the keyboard to be plugged in from either half with the same keymap
 AMBIDEXTERITY_ENABLE = no
+MOUSE_JIGGLE_ENABLE = yes

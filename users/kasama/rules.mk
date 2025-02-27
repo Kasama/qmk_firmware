@@ -31,3 +31,8 @@ endif
 ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
 	SRC += tap_dance.c
 endif
+
+ifeq ($(strip $(MOUSE_JIGGLE_ENABLE)), yes)
+	SRC += mouse_jiggle.c
+    OPT_DEFS += -DMOUSE_JIGGLE_ENABLE
+endif

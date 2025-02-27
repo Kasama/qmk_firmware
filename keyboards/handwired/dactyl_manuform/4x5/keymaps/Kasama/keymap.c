@@ -431,6 +431,11 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
     }
 }
 
+void keyboard_post_init_user(void) {
+    debug_enable = true;
+    debug_matrix = true;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case K_VIMCMD:

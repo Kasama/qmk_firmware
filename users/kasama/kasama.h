@@ -10,3 +10,4 @@
 #include "hid.h"
 #include "auto_numlock.h"
 #include "ambidexterity.h"
+#include "mouse_jiggle.h"

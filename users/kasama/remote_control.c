@@ -1,4 +1,5 @@
 #include "remote_control.h"
+#include "mouse_jiggle.h"
 
 #ifdef REMOTE_CONTROL_ENABLE
 
@@ -34,6 +35,13 @@
 #    define HID_RESP_GET_LAYERS_END 0x46
 #    define HID_RESP_GET_LAYERS_LAYER_NUM 1
 #    define HID_RESP_GET_LAYERS_LAYER_NAME 2
+
+#    define HID_GET_JIGGLE 0x47
+#    define HID_RESP_GET_JIGGLE 0x47
+#    define HID_RESP_GET_JIGGLE_ARG 1
+
+#    define HID_SET_JIGGLE 0x48
+#    define HID_SET_JIGGLE_ARG 1
 
 bool raw_hid_handle_remote_control(uint8_t *data, uint8_t length) {
     uint8_t operation = data[0];
@@ -78,6 +86,20 @@ bool raw_hid_handle_remote_control(uint8_t *data, uint8_t length) {
         response[HID_RESP_BASE]                = HID_RESP_GET_LAYERS;
         response[HID_RESP_GET_LAYER_ARG_LAYER] = HID_RESP_GET_LAYERS_END;
         raw_hid_send(response, length);
+#    ifdef MOUSE_JIGGLE_ENABLE
+    } else if (operation == HID_GET_JIGGLE) {
+        bool enabled                      = is_mouse_jiggler_enabled();
+        response[HID_RESP_BASE]           = HID_RESP_GET_JIGGLE;
+        response[HID_RESP_GET_JIGGLE_ARG] = enabled;
+        raw_hid_send(response, length);
+    } else if (operation == HID_SET_JIGGLE) {
+        bool value = data[HID_SET_JIGGLE_ARG] == 0 ? false : true;
+        set_mouse_jiggler(value);
+        bool enabled                      = is_mouse_jiggler_enabled();
+        response[HID_RESP_BASE]           = HID_RESP_GET_JIGGLE;
+        response[HID_RESP_GET_JIGGLE_ARG] = enabled;
+        raw_hid_send(response, length);
+#    endif
     }
     return true;
 }

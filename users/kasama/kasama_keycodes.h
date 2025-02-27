@@ -9,6 +9,7 @@ enum kasama_custom_keycodes {
     K_VIMCMD = SAFE_RANGE,
     K_XSET,
     K_EMAIL,
+    K_JIGGLE,
     KASAMA_SAFE_RANGE,
 };
 
