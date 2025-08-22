@@ -36,3 +36,8 @@ ifeq ($(strip $(MOUSE_JIGGLE_ENABLE)), yes)
 	SRC += mouse_jiggle.c
     OPT_DEFS += -DMOUSE_JIGGLE_ENABLE
 endif
+
+ifeq ($(strip $(AUTOCORRECT_ENABLE)), yes)
+	SRC += autocorrect.c
+    OPT_DEFS += -DAUTOCORRECT_ENABLE
+endif
