@@ -3,6 +3,7 @@
 ![mouse_test](imgur.com image replace me!)
 
 *A short description of the keyboard/project*
+21 Key and 3 MIDI Potentiometers Macro Keyboard
 
 * Keyboard Maintainer: [Kasama](https://github.com/Kasama)
 * Hardware Supported: *The PCBs, controllers supported*

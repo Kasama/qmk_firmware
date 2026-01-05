@@ -49,14 +49,14 @@ bool process_record_custom_keycode(uint16_t keycode, keyrecord_t *record);
 #define CTRL_1 CTL_T(KC_1)
 
 // Shorform names
-#define KC_ML KC_MS_LEFT
-#define KC_MR KC_MS_RIGHT
-#define KC_MU KC_MS_UP
-#define KC_MD KC_MS_DOWN
-#define KC_MB1 KC_MS_BTN1
-#define KC_MB2 KC_MS_BTN2
-#define KC_MWU KC_MS_WH_UP
-#define KC_MWD KC_MS_WH_DOWN
+#define KC_ML MS_LEFT
+#define KC_MR MS_RGHT
+#define KC_MU MS_UP
+#define KC_MD MS_DOWN
+#define KC_MB1 MS_BTN1
+#define KC_MB2 MS_BTN2
+#define KC_MWU MS_WHLU
+#define KC_MWD MS_WHLD
 #define KC_PRINT KC_PRINT_SCREEN
 
 #define BR_RCBR S(BR_RBRC)

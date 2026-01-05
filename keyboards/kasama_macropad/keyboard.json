@@ -13,7 +13,8 @@
         "extrakey": true,
         "mousekey": true,
         "nkro": true,
-        "pointing_device": true
+        "pointing_device": true,
+        "encoder" : true
     },
     "matrix_pins": {
         "cols": ["GP2", "GP3", "GP4", "GP5", "GP6"],
@@ -24,6 +25,13 @@
         "device_version": "1.0.0",
         "pid": "0x6D61",
         "vid": "0x4B41"
+    },
+    "encoder": {
+        "rotary": [
+            {"pin_a": "GP16", "pin_b": "GP17"},
+            {"pin_a": "GP18", "pin_b": "GP19"},
+            {"pin_a": "GP20", "pin_b": "GP21"}
+        ]
     },
     "layouts": {
         "LAYOUT": {

@@ -32,10 +32,10 @@ void matrix_scan_mouse_jiggler() {
         if (diff > 5 MINUTES) {
             dprintf("jiggling the mouse\n");
             for (int i = 0; i < 2; i++) {
-                tap_code(KC_MS_UP);
+                tap_code(MS_UP);
             }
             for (int i = 0; i < 2; i++) {
-                tap_code(KC_MS_DOWN);
+                tap_code(MS_DOWN);
             }
             last_mouse_jiggle = time;
         }
