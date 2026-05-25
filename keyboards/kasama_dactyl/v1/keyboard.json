@@ -16,6 +16,8 @@
         "tap_dance": false,
         "raw": false,
         "leader": true,
+        "swap_hands": true,
+        "debug": true,
         "steno": true
     },
     "matrix_pins": {
